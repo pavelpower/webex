@@ -1,0 +1,8 @@
+{
+  "name": "package.json",
+  "description": "Package.json file for projects backend.",
+  "dependencies": {
+    "express": "latest",
+    "node-static": "latest"
+  }
+}
