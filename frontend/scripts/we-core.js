@@ -12,7 +12,7 @@
 
             //block for message box
             we.messageBoxCounter = 0;
-            we.messageBox = function(text, title) {
+            we.messageBox = function(params) {
                 var messageBoxLayout = this.document.createElement('div'),
                     messageBoxBody = this.document.createElement('div'),
                     messageBoxHeader = this.document.createElement('div'),
@@ -37,8 +37,8 @@
                 };
 
                 messageBoxLayout.id = 'we-msg-' + we.messageBoxCounter;
-                messageBoxTitle.innerHTML = title || 'Message: ';
-                messageBoxText.textContent = text || '';
+                messageBoxTitle.innerHTML = params.title || 'Message: ';
+                messageBoxText.textContent = params.text || '';
                 messageBoxClose.src = 'images/icons/we-close-icon.png';
                 messageBoxClose.id = 'we-msg-close-' + we.messageBoxCounter;
 
@@ -50,7 +50,66 @@
                 this.body.appendChild(messageBoxLayout);
             };
 
-            //TODO: block for dialog box
+            //block for dialog box
+            we.dialogBoxCounter = 0;
+            we.dialogBox = function(params){
+                var dialogBoxLayout = this.document.createElement('div'),
+                    dialogBoxBody = this.document.createElement('div'),
+                    dialogBoxHeader = this.document.createElement('div'),
+                    dialogBoxClose = this.document.createElement('img'),
+                    dialogBoxTitle = this.document.createElement('span'),
+                    dialogBoxText = this.document.createElement('div'),
+                    dialogBoxButtonsBox = this.document.createElement('div'),
+                    dialogButtonsFragment = this.document.createDocumentFragment(),
+                    dialogBoxYesButton = this.document.createElement('input'),
+                    dialogBoxNoButton = this.document.createElement('input'),
+                    dialogBoxCancelButton = this.document.createElement('input');
+
+                we.dialogBoxCounter++;
+
+                dialogBoxClose.onclick = function(){
+                    var currentId = this.id.split('-').reverse()[0],
+                        dlgLayout = we.general.getElement('we-dlg-' + currentId);
+
+                    dlgLayout.remove();
+                };
+
+                dialogBoxLayout.className = 'we-dialog__background';
+                dialogBoxBody.className = 'we-dialog__body';
+                dialogBoxHeader.className = 'we-dialog__header';
+                dialogBoxTitle.className = 'we-dialog__title';
+                dialogBoxClose.className = 'we-dialog__close';
+                dialogBoxText.className = 'we-dialog__text';
+                dialogBoxButtonsBox.className = 'we-dialog__button-box';
+                dialogBoxYesButton.className = 'we-dialog__buttons';
+                dialogBoxNoButton.className = 'we-dialog__buttons';
+                dialogBoxCancelButton.className = 'we-dialog__buttons';
+
+                dialogBoxLayout.id = 'we-dlg-' + we.dialogBoxCounter;
+                dialogBoxTitle.innerHTML = params.title || 'Dialog';
+                dialogBoxClose.src = 'images/icons/we-close-icon.png';
+                dialogBoxClose.id = 'we-dlg-close-' + we.dialogBoxCounter;
+                dialogBoxText.textContent = params.text || '';
+                dialogBoxYesButton.value = 'Yes';
+                dialogBoxNoButton.value = 'No';
+                dialogBoxCancelButton.value = 'Cancel';
+                dialogBoxYesButton.type = 'button';
+                dialogBoxNoButton.type = 'button';
+                dialogBoxCancelButton.type = 'button';
+
+                dialogButtonsFragment.appendChild(dialogBoxCancelButton);
+                dialogButtonsFragment.appendChild(dialogBoxNoButton);
+                dialogButtonsFragment.appendChild(dialogBoxYesButton);
+
+                dialogBoxButtonsBox.appendChild(dialogButtonsFragment);
+                dialogBoxHeader.appendChild(dialogBoxTitle);
+                dialogBoxHeader.appendChild(dialogBoxClose);
+                dialogBoxBody.appendChild(dialogBoxHeader);
+                dialogBoxBody.appendChild(dialogBoxText);
+                dialogBoxBody.appendChild(dialogBoxButtonsBox);
+                dialogBoxLayout.appendChild(dialogBoxBody);
+                this.body.appendChild(dialogBoxLayout);
+            }
 
             //create general settings
             we.general = {};
