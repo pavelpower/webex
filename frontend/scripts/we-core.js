@@ -111,6 +111,8 @@
                 this.body.appendChild(dialogBoxLayout);
             }
 
+
+
             //create general settings
             we.general = {};
 
@@ -133,7 +135,7 @@
                 this.loadModule('../scripts/we-doc.js');
 
                 we.doc.create({
-
+                     sheetsCount: 3
                 });
             };
 

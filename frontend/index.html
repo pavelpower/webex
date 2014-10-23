@@ -11,10 +11,10 @@
 <body>
     <div class="we-container">
         <div class="we-container__header">
-            <input type="button" value="MessageBox" onclick="we.messageBox('Hello from MessageBox!', 'Hello!')"/>
-            <input type="button" value="DialogBox" onclick=""/>
+            <input type="button" value="MessageBox" onclick="we.messageBox({text: 'Hello, MessageBox!', title: 'MessageBox'})"/>
+            <input type="button" value="DialogBox" onclick="we.dialogBox({text: 'Do you want to create new document?', title: 'DialogBox'})"/>
         </div>
-        <div class="we-container__body"></div>
+        <div class="we-container__body" id="we-container__body"></div>
     </div>
 </body>
 </html>
