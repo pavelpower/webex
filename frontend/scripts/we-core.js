@@ -53,7 +53,6 @@
             //block for dialog box
             we.dialog = {};
             we.dialog.timer = 0;
-
             we.dialog.checkStatus = function(events) {
                 if (we.dialog.queue) {
                     clearInterval(we.dialog.timer);
@@ -67,13 +66,11 @@
                     }
                 }
             };
-
             we.dialog.listener = function(events) {
                 we.dialog.timer = setInterval(function() {
                     we.dialog.checkStatus(events);
                 }, 0);
             };
-
             we.dialog.finalize = function(obj){
                 var currentId = obj.id.split('-').reverse()[0],
                     dlgLayout = we.general.getElement('we-dlg-' + currentId);
@@ -165,7 +162,10 @@
                 we.dialog.result = false;
 
                 we.dialog.listener(events);
-            }
+            };
+
+            //TODO: create formBox
+            we.formbox = {};
 
             //create general settings
             we.general = {};
