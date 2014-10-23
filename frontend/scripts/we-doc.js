@@ -1,20 +1,32 @@
 (function(){
     we.doc = {};
     we.doc.docBody = we.general.getElement('we-container__body');
+    we.doc.isOpened = false;
+    we.doc.isSaved = false;
 
     we.doc.create = function(config) {
-        //create loading gif for user
-        we.doc.docBody.style.background = 'url("../images/loading.gif") no-repeat center center';
 
-        we.general.loadModule('../scripts/we-sheet.js');
-        we.doc.createLayout();
+        if(!we.doc.isOpened && !we.doc.isSaved) {
+            //create loading gif for user
+            we.doc.docBody.style.background = 'url("../images/loading.gif") no-repeat center center';
 
-        for(var i = 0; i < config.sheetsCount; i++){
-            we.sheet.add();
+            we.general.loadModule('../scripts/we-sheet.js');
+            we.doc.createLayout();
+
+            for (var i = 0; i < config.sheetsCount; i++) {
+                we.sheet.add();
+            }
+
+            //revert to default stage
+            we.doc.docBody.style.background = '#e7e7e7';
+
+            we.doc.isOpened = true;
+        } else{
+            we.messageBox({
+                title: 'Warning',
+                text: 'Your current document was changed, please, save document, or close document without saving!'
+            });
         }
-
-        //revert to default stage
-        we.doc.docBody.style.background = '#e7e7e7';
     };
 
     we.doc.createLayout = function() {

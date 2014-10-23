@@ -32,9 +32,20 @@
             we.formBox(
                     {
                         title: 'New Document'
-                    },{
-
-                    });
+                    },[
+                        {
+                            label: 'Name',
+                            type: 'text',
+                            defaultValue: 'NewDocument',
+                            name: 'docName'
+                        },
+                        {
+                            label: 'Sheet Count',
+                            type: 'number',
+                            defaultValue: 3,
+                            name: 'sheetsCount'
+                        }
+                    ], we.doc.create);
         }
     </script>
 </head>
