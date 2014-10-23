@@ -54,14 +54,24 @@
             we.dialog = {};
             we.dialog.timer = 0;
 
-            we.dialog.checkStatus = function() {
+            we.dialog.checkStatus = function(events) {
                 if (we.dialog.queue) {
                     clearInterval(we.dialog.timer);
+
+                    if(we.dialog.result){
+                        events.accept();
+                    } else if (we.dialog.result === false){
+                        events.decline();
+                    } else {
+                        events.cancel();
+                    }
                 }
             };
 
-            we.dialog.listener = function() {
-                we.dialog.timer = setInterval(we.dialog.checkStatus, 0);
+            we.dialog.listener = function(events) {
+                we.dialog.timer = setInterval(function() {
+                    we.dialog.checkStatus(events);
+                }, 0);
             };
 
             we.dialog.finalize = function(obj){
@@ -72,7 +82,7 @@
             };
 
             we.dialogBoxCounter = 0;
-            we.dialogBox = function(params){
+            we.dialogBox = function(params, events){
                 var dialogBoxLayout = this.document.createElement('div'),
                     dialogBoxBody = this.document.createElement('div'),
                     dialogBoxHeader = this.document.createElement('div'),
@@ -154,10 +164,8 @@
                 we.dialog.queue = false;
                 we.dialog.result = false;
 
-                we.dialog.listener();
+                we.dialog.listener(events);
             }
-
-
 
             //create general settings
             we.general = {};

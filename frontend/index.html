@@ -10,9 +10,22 @@
 
     <script type="text/javascript">
         function clickOnDialog() {
-            console.log('You clicked on dialog button!');
-
-            we.dialogBox({text: 'Do you want to create new document?', title: 'DialogBox'});
+            we.dialogBox(
+                    {
+                        text: 'Do you want to create new document?',
+                        title: 'DialogBox'
+                    },
+                    {
+                        accept: function() {
+                            console.log('User accepted!');
+                        },
+                        decline: function() {
+                            console.log('User declined!');
+                        },
+                        cancel: function() {
+                            console.log('User canceled!');
+                        }
+                    });
         }
     </script>
 </head>
