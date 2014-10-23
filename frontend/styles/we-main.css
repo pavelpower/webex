@@ -106,10 +106,14 @@ body,
 }
 
 .we-grid-sheet-body{
-    border: 1px solid black;
-    width: 100px;
-    height: 100px;
-    background: #ff0000;
+    display: none;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.we-grid-sheet-body-active{
+    display: block;
 }
 
 .we-grid-sheet-label{
@@ -122,6 +126,8 @@ body,
     height: 30px;
     background: #f7f7f7;
     border: 1px solid #777777;
+    border-left: none;
+    vertical-align: top;
 }
 
 .we-grid-sheet-label:hover{
@@ -130,12 +136,28 @@ body,
 
 .we-grid-sheet-label:first-of-type{
     margin-left: 10px;
+    border-left: 1px solid #777777;
 }
 
 .we-grid-sheet-label-active{
     height: 35px;
     font-weight: 700;
-    top: -2px;
+    top: -1px;
     border-top: none;
     background: #e7e7e7;
+}
+
+.we-sheet-add-button{
+    position: relative;
+    top: -1px;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #777777;
+    border-left: none;
+    background: url('../images/add-sheet.png') no-repeat center center;
+}
+
+.we-sheet-add-button:hover{
+    cursor: pointer;
 }

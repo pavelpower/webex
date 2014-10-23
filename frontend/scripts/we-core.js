@@ -135,7 +135,7 @@
                 this.loadModule('../scripts/we-doc.js');
 
                 we.doc.create({
-                     sheetsCount: 3
+                     sheetsCount: 5
                 });
             };
 

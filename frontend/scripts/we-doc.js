@@ -19,7 +19,15 @@
 
     we.doc.createLayout = function() {
         var docGrid = we.document.createElement('div'),
-            docFooter = we.document.createElement('div');
+            docFooter = we.document.createElement('div'),
+            sheetAddButton = we.document.createElement('div');
+
+        sheetAddButton.className = 'we-sheet-add-button';
+        sheetAddButton.id = 'we-sheet-add-button';
+
+        sheetAddButton.onclick = function(){
+            we.sheet.add();
+        };
 
         docFooter.id = 'we-doc-footer';
         docFooter.className = 'we-doc-footer';
@@ -30,6 +38,7 @@
         we.doc.docLayout = docGrid;
         we.doc.docFooter = docFooter;
 
+        docFooter.appendChild(sheetAddButton);
         we.doc.docBody.appendChild(docGrid);
         we.doc.docBody.appendChild(docFooter);
     };
