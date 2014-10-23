@@ -51,6 +51,26 @@
             };
 
             //block for dialog box
+            we.dialog = {};
+            we.dialog.timer = 0;
+
+            we.dialog.checkStatus = function() {
+                if (we.dialog.queue) {
+                    clearInterval(we.dialog.timer);
+                }
+            };
+
+            we.dialog.listener = function() {
+                we.dialog.timer = setInterval(we.dialog.checkStatus, 0);
+            };
+
+            we.dialog.finalize = function(obj){
+                var currentId = obj.id.split('-').reverse()[0],
+                    dlgLayout = we.general.getElement('we-dlg-' + currentId);
+
+                dlgLayout.remove();
+            };
+
             we.dialogBoxCounter = 0;
             we.dialogBox = function(params){
                 var dialogBoxLayout = this.document.createElement('div'),
@@ -68,10 +88,27 @@
                 we.dialogBoxCounter++;
 
                 dialogBoxClose.onclick = function(){
-                    var currentId = this.id.split('-').reverse()[0],
-                        dlgLayout = we.general.getElement('we-dlg-' + currentId);
+                    we.dialog.queue = true;
+                    we.dialog.result = undefined;
+                    we.dialog.finalize(this);
+                };
 
-                    dlgLayout.remove();
+                dialogBoxYesButton.onclick = function() {
+                    we.dialog.queue = true;
+                    we.dialog.result = true;
+                    we.dialog.finalize(this);
+                };
+
+                dialogBoxNoButton.onclick = function() {
+                    we.dialog.queue = true;
+                    we.dialog.result = false;
+                    we.dialog.finalize(this);
+                };
+
+                dialogBoxCancelButton.onclick = function() {
+                    we.dialog.queue = true;
+                    we.dialog.result = undefined;
+                    we.dialog.finalize(this);
                 };
 
                 dialogBoxLayout.className = 'we-dialog__background';
@@ -84,6 +121,10 @@
                 dialogBoxYesButton.className = 'we-dialog__buttons';
                 dialogBoxNoButton.className = 'we-dialog__buttons';
                 dialogBoxCancelButton.className = 'we-dialog__buttons';
+
+                dialogBoxYesButton.id = 'we-dlg-yes-btn-' + we.dialogBoxCounter;
+                dialogBoxNoButton.id = 'we-dlg-no-btn-' + we.dialogBoxCounter;
+                dialogBoxCancelButton.id = 'we-dlg-cancel-btn-' + we.dialogBoxCounter;
 
                 dialogBoxLayout.id = 'we-dlg-' + we.dialogBoxCounter;
                 dialogBoxTitle.innerHTML = params.title || 'Dialog';
@@ -109,6 +150,11 @@
                 dialogBoxBody.appendChild(dialogBoxButtonsBox);
                 dialogBoxLayout.appendChild(dialogBoxBody);
                 this.body.appendChild(dialogBoxLayout);
+
+                we.dialog.queue = false;
+                we.dialog.result = false;
+
+                we.dialog.listener();
             }
 
 

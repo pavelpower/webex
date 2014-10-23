@@ -161,3 +161,25 @@ body,
 .we-sheet-add-button:hover{
     cursor: pointer;
 }
+
+.we-header__add-document{
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    background: url('../images/add-document.png') no-repeat center center;
+    margin: 15px 0 15px 15px;
+}
+
+.we-header__open-document{
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    background: url('../images/open-document.png') no-repeat center center;
+    margin: 15px 0;
+}
+
+.we-header__add-document:hover,
+.we-header__open-document:hover{
+    cursor: pointer;
+    background-color: #777777;
+}
