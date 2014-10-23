@@ -17,7 +17,8 @@ body,
     background: #e7e7e7;
 }
 
-.we-message__background{
+.we-message__background,
+.we-dialog__background{
     position: absolute;
     left: 0;
     top: 0;
@@ -26,7 +27,8 @@ body,
     background: RGBA(0, 0, 0, .3);
 }
 
-.we-message__body{
+.we-message__body,
+.we-dialog__body{
     position: absolute;
     left: calc(50% - 150px);
     top: 150px;
@@ -35,20 +37,23 @@ body,
     background: #e7e7e7;
 }
 
-.we-message__header{
+.we-message__header,
+.we-dialog__header{
     height: 30px;
     border-bottom: 1px solid #d7d7d7;
     padding: 0 10px;
 }
 
-.we-message__title{
+.we-message__title,
+.we-dialog__title{
     font-family: Arial;
     font-size: 16px;
     font-weight: 700;
     line-height: 30px;
 }
 
-.we-message__text{
+.we-message__text,
+.we-dialog__text{
     font-family: Arial;
     font-size: 12px;
     font-weight: 400;
@@ -57,13 +62,34 @@ body,
     margin: 10px;
 }
 
-.we-message__close{
+.we-message__close,
+.we-dialog__close{
     float: right;
     margin: 7px 0;
     opacity: 0.2;
 }
 
-.we-message__close:hover{
+.we-message__close:hover,
+.we-dialog__close:hover{
     cursor: pointer;
     opacity: 1.0;
+}
+
+.we-dialog__button-box{
+    height: 30px;
+    border-top: 1px solid #d7d7d7;
+    font-size: 0;
+    padding: 0;
+}
+
+.we-dialog__buttons{
+    border-radius: 0;
+    float: right;
+    border: 1px solid #777777;
+    margin: 7px 5px;
+    width: 70px;
+}
+
+.we-dialog__buttons:first-of-type{
+    margin-right: 10px;
 }
