@@ -27,6 +27,15 @@
                         }
                     });
         }
+
+        function clickOnFormBox(){
+            we.formBox(
+                    {
+                        title: 'New Document'
+                    },{
+
+                    });
+        }
     </script>
 </head>
 <body>
@@ -36,6 +45,7 @@
             <div class="we-header__open-document"></div>
             <input type="button" value="MessageBox" onclick="we.messageBox({text: 'Hello, MessageBox!', title: 'MessageBox'})"/>
             <input type="button" value="DialogBox" onclick="clickOnDialog()"/>
+            <input type="button" value="FormBox" onclick="clickOnFormBox()"/>
         </div>
         <div class="we-container__body" id="we-container__body"></div>
     </div>

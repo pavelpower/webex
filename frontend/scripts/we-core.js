@@ -165,7 +165,79 @@
             };
 
             //TODO: create formBox
-            we.formbox = {};
+            we.formBox = function(params, fields){
+                var formboxLayout = we.document.createElement('div'),
+                    formboxBoxBody = this.document.createElement('div'),
+                    formboxBoxHeader = this.document.createElement('div'),
+                    formboxBoxClose = this.document.createElement('img'),
+                    formboxBoxTitle = this.document.createElement('span'),
+                    formboxBoxForm = this.document.createElement('form'),
+                    formboxBoxButtonsBox = this.document.createElement('div'),
+                    formboxBoxResetButton = this.document.createElement('input'),
+                    formboxBoxCreateButton = this.document.createElement('input'),
+                    formboxBoxCancelButton = this.document.createElement('input');
+
+                formboxBoxResetButton.className = 'we-formbox__buttons';
+                formboxBoxCreateButton.className = 'we-formbox__buttons';
+                formboxBoxCancelButton.className = 'we-formbox__buttons';
+
+                formboxBoxResetButton.value = 'Reset';
+                formboxBoxCreateButton.value = 'Create';
+                formboxBoxCancelButton.value = 'Cancel';
+
+                formboxBoxResetButton.type = 'button';
+                formboxBoxCreateButton.type = 'button';
+                formboxBoxCancelButton.type = 'button';
+
+                formboxLayout.className = 'we-formbox__background';
+                formboxBoxBody.className = 'we-formbox__body';
+                formboxBoxHeader.className = 'we-formbox__header';
+                formboxBoxTitle.className = 'we-formbox__title';
+                formboxBoxClose.className = 'we-formbox__close';
+                formboxBoxForm.className = 'we-formbox__form';
+                formboxBoxButtonsBox.className = 'we-formbox__button-box';
+
+                formboxBoxClose.src = 'images/icons/we-close-icon.png';
+                formboxBoxTitle.innerHTML = params.title || 'FormBox';
+
+                formboxBoxForm.appendChild(addField({
+                    label: 'Title1',
+                    type: 'text'
+                }));
+
+                formboxBoxForm.appendChild(addField({
+                    label: 'Title2',
+                    type: 'text'
+                }));
+
+                formboxBoxButtonsBox.appendChild(formboxBoxCancelButton);
+                formboxBoxButtonsBox.appendChild(formboxBoxCreateButton);
+                formboxBoxButtonsBox.appendChild(formboxBoxResetButton);
+                formboxBoxHeader.appendChild(formboxBoxTitle);
+                formboxBoxHeader.appendChild(formboxBoxClose);
+                formboxBoxBody.appendChild(formboxBoxHeader);
+                formboxBoxBody.appendChild(formboxBoxForm);
+                formboxBoxBody.appendChild(formboxBoxButtonsBox);
+                formboxLayout.appendChild(formboxBoxBody);
+                this.body.appendChild(formboxLayout);
+
+                function addField(config){
+                    var box = we.document.createElement('div'),
+                        label = we.document.createElement('span'),
+                        input = we.document.createElement('input');
+
+                    label.className = 'we-formbox-field-label';
+                    input.className = 'we-formbox-field-input';
+                    box.className = 'we-formbox-panel';
+
+                    label.textContent = config.label + ':';
+
+                    box.appendChild(label);
+                    box.appendChild(input);
+
+                    return box;
+                }
+            };
 
             //create general settings
             we.general = {};
@@ -189,7 +261,7 @@
                 this.loadModule('../scripts/we-doc.js');
 
                 we.doc.create({
-                     sheetsCount: 5
+                     sheetsCount: 3
                 });
             };
 
