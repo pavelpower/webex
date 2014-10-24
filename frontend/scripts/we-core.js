@@ -164,7 +164,6 @@
                 we.dialog.listener(events);
             };
 
-            //TODO: create formBox
             we.formbox = {};
             we.formbox.finalize = function(obj){
                 var currentId = obj.id.split('-').reverse()[0],
@@ -327,11 +326,180 @@
                 xhr.send(null);
             };
 
-            we.general.create = function(){
+            we.general.init = function(){
                 this.loadModule('../scripts/we-doc.js');
             };
 
-            we.general.create();
+            we.newDoc = we.general.getElement('we-new-doc');
+            we.newDoc.onclick = function() {
+                if(!we.doc.isOpened){
+                    we.formBox(
+                        {
+                            title: 'New Document'
+                        },[
+                            {
+                                label: 'Name',
+                                type: 'text',
+                                defaultValue: 'NewDocument',
+                                name: 'docName'
+                            },
+                            {
+                                label: 'Sheet Count',
+                                type: 'number',
+                                defaultValue: 3,
+                                name: 'sheetsCount'
+                            }
+                        ], we.doc.create);
+                } else{
+                    if(we.doc.isSaved){
+                        we.dialogBox({
+                            title: 'Warning!',
+                            text: 'We close current document, and you create the new one. Do you want to close current document?'
+                        }, {
+                            accept: function() {
+                                we.doc.save();
+                                we.doc.close();
+                                we.formBox(
+                                    {
+                                        title: 'New Document'
+                                    },[
+                                        {
+                                            label: 'Name',
+                                            type: 'text',
+                                            defaultValue: 'NewDocument',
+                                            name: 'docName'
+                                        },
+                                        {
+                                            label: 'Sheet Count',
+                                            type: 'number',
+                                            defaultValue: 3,
+                                            name: 'sheetsCount'
+                                        }
+                                    ], we.doc.create);
+                            },
+                            decline: function() {
+                                console.log('User declined!');
+                            },
+                            cancel: function() {
+                                console.log('User canceled!');
+                            }
+                        });
+                    } else{
+                        we.dialogBox({
+                            title: 'Warning!',
+                            text: 'We close current document, and you create the new one. Do you want to save current document before?'
+                        }, {
+                            accept: function() {
+                                we.doc.close();
+                                we.formBox(
+                                    {
+                                        title: 'New Document'
+                                    },[
+                                        {
+                                            label: 'Name',
+                                            type: 'text',
+                                            defaultValue: 'NewDocument',
+                                            name: 'docName'
+                                        },
+                                        {
+                                            label: 'Sheet Count',
+                                            type: 'number',
+                                            defaultValue: 3,
+                                            name: 'sheetsCount'
+                                        }
+                                    ], we.doc.create);
+                            },
+                            decline: function() {
+                                console.log('User declined!');
+                            },
+                            cancel: function() {
+                                console.log('User canceled!');
+                            }
+                        })
+                    }
+                }
+            };
+
+            we.saveDoc = we.general.getElement('we-save-doc');
+            we.saveDoc.onclick = function() {
+                if(!we.doc.isOpened){
+                    we.messageBox({
+                        title: 'Warning!',
+                        text: 'There is no document to save!'
+                    });
+                } else if (we.doc.isSaved) {
+                    we.messageBox({
+                        title: 'Message',
+                        text: 'Document has already saved!'
+                    });
+                } else {
+                    we.doc.save();
+                    we.messageBox({
+                        title: 'Message',
+                        text: 'Document successfully saved.'
+                    });
+                }
+            };
+
+            we.openDoc = we.general.getElement('we-open-doc');
+            we.openDoc.onclick = function() {
+                if(we.doc.isOpened){
+                    if(we.doc.isSaved){
+                        we.dialogBox({
+                            title: 'Warning!',
+                            text: 'We close current document, and you can open your document. Do you want to close current document?'
+                        }, {
+                            accept: function() {
+                                we.doc.close();
+                                console.log('Open file dialog window...');
+                            },
+                            decline: function() {
+                                console.log('User declined!');
+                            },
+                            cancel: function() {
+                                console.log('User canceled!');
+                            }
+                        });
+                    } else {
+                        we.dialogBox({
+                            title: 'Warning!',
+                            text: 'We close current document, and you can open your document. Do you want to save current document?'
+                        }, {
+                            accept: function() {
+                                we.doc.save();
+                                we.doc.close();
+                                we.formBox(
+                                    {
+                                        title: 'New Document'
+                                    },[
+                                        {
+                                            label: 'Name',
+                                            type: 'text',
+                                            defaultValue: 'NewDocument',
+                                            name: 'docName'
+                                        },
+                                        {
+                                            label: 'Sheet Count',
+                                            type: 'number',
+                                            defaultValue: 3,
+                                            name: 'sheetsCount'
+                                        }
+                                    ], we.doc.create);
+                            },
+                            decline: function() {
+                                console.log('User declined!');
+                            },
+                            cancel: function() {
+                                console.log('User canceled!');
+                            }
+                        });
+                    }
+                } else {
+                    console.log('Open file dialog window...');
+                }
+            };
+
+            we.general.init();
         }
     }
 })()

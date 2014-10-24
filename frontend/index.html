@@ -27,36 +27,14 @@
                         }
                     });
         }
-
-        function clickOnFormBox(){
-            we.formBox(
-                    {
-                        title: 'New Document'
-                    },[
-                        {
-                            label: 'Name',
-                            type: 'text',
-                            defaultValue: 'NewDocument',
-                            name: 'docName'
-                        },
-                        {
-                            label: 'Sheet Count',
-                            type: 'number',
-                            defaultValue: 3,
-                            name: 'sheetsCount'
-                        }
-                    ], we.doc.create);
-        }
     </script>
 </head>
 <body>
     <div class="we-container">
         <div class="we-container__header">
-            <div class="we-header__add-document"></div>
-            <div class="we-header__open-document"></div>
-            <input type="button" value="MessageBox" onclick="we.messageBox({text: 'Hello, MessageBox!', title: 'MessageBox'})"/>
-            <input type="button" value="DialogBox" onclick="clickOnDialog()"/>
-            <input type="button" value="FormBox" onclick="clickOnFormBox()"/>
+            <div class="we-header__add-document" id="we-new-doc"></div>
+            <div class="we-header__open-document" id="we-open-doc"></div>
+            <div class="we-header__save-document" id="we-save-doc"></div>
         </div>
         <div class="we-container__body" id="we-container__body"></div>
     </div>

@@ -113,6 +113,7 @@ body,
     height: calc(100% - 50px);
     overflow: auto;
     border: 1px solid #777777;
+    box-sizing: border-box;
 }
 
 .we-doc-footer{
@@ -194,7 +195,8 @@ body,
 }
 
 .we-header__add-document:hover,
-.we-header__open-document:hover{
+.we-header__open-document:hover,
+.we-header__save-document:hover{
     cursor: pointer;
     background-color: #777777;
 }
@@ -210,4 +212,38 @@ body,
 
 .we-formbox-field-input{
     float: right;
+}
+
+.we-header__save-document{
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    background: url('../images/open-document.png') no-repeat center center;
+    margin: 15px 0;
+}
+
+.we-grid-sheet-body-grid{
+    display: inline-block;
+    width: 2600px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.we-row{
+
+}
+
+.we-cell{
+    width: 100px;
+    height: 20px;
+    border: 1px solid #777777;
+    overflow: hidden;
+}
+
+.we-cell-head{
+    width: 50px;
+    height: 20px;
+    border: 1px solid #777777;
+    overflow: hidden;
+    background-color: #c7c7c7;
 }
