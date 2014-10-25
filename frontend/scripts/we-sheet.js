@@ -27,13 +27,18 @@
 
             for(var j = 0; j < we.sheet.colsCount; j++){
                 var cell = row.insertCell(0);
-                cell.id = 'we-cell-' + we.sheet.count + '-' + (we.sheet.rowsCount - i) + '-' + (we.sheet.colsCount - j);
+                cell.id = 'we-cell-' + we.sheet.count + '-' + (we.sheet.rowsCount - i) + '-' + (we.sheet.colsCount - j - 1);
                 if(j === (we.sheet.colsCount - 1)){
                     cell.className = 'we-cell-head';
                     cell.innerHTML = (we.sheet.rowsCount - i);
                     console.log(j);
                 } else{
                     cell.className = 'we-cell';
+                    var input = we.document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'we-cell-input';
+                    input.id = 'we-cell-input-' + we.sheet.count + '-' + (we.sheet.rowsCount - i) + '-' + (we.sheet.colsCount - j - 1);
+                    cell.appendChild(input);
                 }
             }
         }

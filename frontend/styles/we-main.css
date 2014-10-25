@@ -247,3 +247,16 @@ body,
     overflow: hidden;
     background-color: #c7c7c7;
 }
+
+.we-cell-input{
+    margin: 0;
+    height: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+}
+
+.we-cell-input:hover{
+    cursor: default;
+}
