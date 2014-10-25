@@ -3,38 +3,25 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>WebEx</title>
-
     <link rel="stylesheet" href="styles/we-main.css" type="text/css"/>
-
     <script type="text/javascript" src="scripts/we-core.js"></script>
-
-    <script type="text/javascript">
-        function clickOnDialog() {
-            we.dialogBox(
-                    {
-                        text: 'Do you want to create new document?',
-                        title: 'DialogBox'
-                    },
-                    {
-                        accept: function() {
-                            console.log('User accepted!');
-                        },
-                        decline: function() {
-                            console.log('User declined!');
-                        },
-                        cancel: function() {
-                            console.log('User canceled!');
-                        }
-                    });
-        }
-    </script>
 </head>
 <body>
     <div class="we-container">
         <div class="we-container__header">
-            <div class="we-header__add-document" id="we-new-doc"></div>
-            <div class="we-header__open-document" id="we-open-doc"></div>
-            <div class="we-header__save-document" id="we-save-doc"></div>
+            <div class="we-header__mainMenu">
+                <div class="we-header__add-document" id="we-new-doc"></div>
+                <div class="we-header__open-document" id="we-open-doc"></div>
+                <div class="we-header__save-document" id="we-save-doc"></div>
+            </div>
+            <div class="we-header__settingsMenu"></div>
+            <div class="we-header__expBody">
+                <div class="we-expBody" id="we-bar">
+                    <input type="text" class="we-rangeField" id="we-range-fld" disabled="disabled" />
+                    <input type="button" value="f(x)" class="we-formulaBtn" id="we-formula-btn" disabled="disabled"/>
+                    <input type="text" class="we-formulaField" id="we-formula-fld" disabled="disabled"/>
+                </div>
+            </div>
         </div>
         <div class="we-container__body" id="we-container__body"></div>
     </div>

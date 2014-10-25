@@ -180,18 +180,18 @@ body,
 
 .we-header__add-document{
     display: inline-block;
-    width: 70px;
-    height: 70px;
-    background: url('../images/add-document.png') no-repeat center center;
-    margin: 15px 0 15px 15px;
+    width: 32px;
+    height: 32px;
+    background: url('../images/main-menu/new_doc.png') no-repeat center center;
+    margin: 4px 0;
 }
 
 .we-header__open-document{
     display: inline-block;
-    width: 70px;
-    height: 70px;
-    background: url('../images/open-document.png') no-repeat center center;
-    margin: 15px 0;
+    width: 32px;
+    height: 32px;
+    background: url('../images/main-menu/open_doc.png') no-repeat center center;
+    margin: 4px 0;
 }
 
 .we-header__add-document:hover,
@@ -216,10 +216,10 @@ body,
 
 .we-header__save-document{
     display: inline-block;
-    width: 70px;
-    height: 70px;
-    background: url('../images/open-document.png') no-repeat center center;
-    margin: 15px 0;
+    width: 32px;
+    height: 32px;
+    background: url('../images/main-menu/save_doc.png') no-repeat center center;
+    margin: 4px 0;
 }
 
 .we-grid-sheet-body-grid{
@@ -260,3 +260,83 @@ body,
 .we-cell-input:hover{
     cursor: default;
 }
+
+.we-cell-input-active{
+    background-color: #79ABED;
+}
+
+.we-cell-input-oninput{
+    background-color: white;
+}
+
+.we-header__mainMenu{
+    height: 40px;
+    margin: 0 10px;
+    font-size: 0;
+}
+
+.we-header__settingsMenu{
+    height: 30px;
+    margin: 0 10px;
+    border-bottom: 1px dashed #777;
+    border-top: 1px dashed #777;
+    box-sizing: border-box;
+}
+
+.we-header__expBody{
+    height: 30px;
+}
+
+.we-expBody{
+    height: 100%;
+    margin: 0 10px;
+    font-size: 0;
+}
+
+.we-formulaBtn{
+    width: auto;
+    height: 24px;
+    box-sizing: border-box;
+    margin: 3px 0;
+    border: 1px solid #777777;
+    border-right: none;
+    background: #a7a7a7;
+    font: 700 italic 12px Arial;
+}
+
+.we-formulaField{
+    width: 510px;
+    height: 24px;
+    box-sizing: border-box;
+    margin: 3px 0;
+    vertical-align: top;
+    border: 1px solid #777777;
+    border-left: none;
+    padding: 0 0 0 10px;
+}
+
+.we-rangeField{
+    height: 24px;
+    width: 100px;
+    margin: 3px 5px 3px 0;
+    box-sizing: border-box;
+    border: 1px solid #777777;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

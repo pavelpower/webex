@@ -2,23 +2,30 @@
     we.sheet = {};
     we.sheet.count = 0;
     we.sheet.items = [];
-    we.sheet.active = 1;
+    we.sheet.active = {};
     we.sheet.colsCount = 26;
     we.sheet.rowsCount = 100;
 
-    we.sheet.items.clear = function(){
-        var len = we.sheet.items.length;
+    we.sheet.selection = [];
+    we.sheet.selectionClear = function () {
+        var len = we.sheet.selection.length;
 
         for(var i = 0; i < len; i++){
-            we.sheet.items[i].label.className = 'we-grid-sheet-label';
-            we.sheet.items[i].body.className = 'we-grid-sheet-body';
+            we.sheet.selection[i].className = 'we-cell-input';
         }
+
+        we.sheet.selection = [];
+    };
+
+    we.sheet.items.clear = function(){
+        we.dom.removeClass(we.sheet.active.label, 'we-grid-sheet-label-active');
+        we.dom.removeClass(we.sheet.active.body, 'we-grid-sheet-body-active');
     };
 
     we.sheet.create = function(newSheet){
-        var sheetBody = we.document.createElement('div'),
-            sheetLabel = we.document.createElement('div'),
-            grid = we.document.createElement('table');
+        var sheetBody = we.dom.document.createElement('div'),
+            sheetLabel = we.dom.document.createElement('div'),
+            grid = we.dom.document.createElement('table');
 
         for(var i = 0; i < we.sheet.rowsCount; i++){
             var row = grid.insertRow(0);
@@ -31,13 +38,30 @@
                 if(j === (we.sheet.colsCount - 1)){
                     cell.className = 'we-cell-head';
                     cell.innerHTML = (we.sheet.rowsCount - i);
-                    console.log(j);
                 } else{
                     cell.className = 'we-cell';
-                    var input = we.document.createElement('input');
+                    var input = we.dom.document.createElement('input');
                     input.type = 'text';
                     input.className = 'we-cell-input';
                     input.id = 'we-cell-input-' + we.sheet.count + '-' + (we.sheet.rowsCount - i) + '-' + (we.sheet.colsCount - j - 1);
+                    input.readOnly = true;
+
+                    input.onclick = function (){
+                        we.sheet.selectionClear();
+
+                        we.dom.addClass(this, 'we-cell-input-active');
+
+                        we.sheet.selection.push(this);
+                    };
+                    input.ondblclick = function() {
+                        this.readOnly = false;
+
+                        this.className = 'we-cell-input we-cell-input-oninput';
+                    };
+                    input.onblur = function(){
+                        this.readOnly = true;
+                    };
+
                     cell.appendChild(input);
                 }
             }
@@ -56,8 +80,11 @@
         sheetBody.innerHTML = we.sheet.count;
 
         if(we.sheet.count === 1) {
-            sheetLabel.className += ' we-grid-sheet-label-active';
-            sheetBody.className += ' we-grid-sheet-body-active';
+            we.sheet.active.label = sheetLabel;
+            we.sheet.active.body = sheetBody;
+
+            we.dom.addClass(we.sheet.active.label, 'we-grid-sheet-label-active');
+            we.dom.addClass(we.sheet.active.body, 'we-grid-sheet-body-active');
         }
 
         newSheet.id = we.sheet.count;
@@ -70,13 +97,17 @@
 
             we.sheet.items.clear();
 
-            this.className += ' we-grid-sheet-label-active';
+            we.sheet.active.label = this;
+            we.sheet.active.body = we.general.getElement('we-sheet-body-' + currentId);
+
+            we.dom.addClass(we.sheet.active.label, 'we-grid-sheet-label-active');
+            we.dom.addClass(we.sheet.active.body, 'we-grid-sheet-body-active');
+
             we.general.getElement('we-sheet-body-' + currentId).className += ' we-grid-sheet-body-active';
         };
 
         sheetBody.appendChild(grid);
         we.doc.docLayout.appendChild(sheetBody);
-        //we.general.getElement('we-sheet-add-button').insertBefore(sheetLabel);
         we.doc.docFooter.insertBefore(sheetLabel, we.general.getElement('we-sheet-add-button'));
     };
 
