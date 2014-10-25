@@ -175,9 +175,150 @@
             we.core.msg.formFieldDefaults = [];
             we.core.msg.formFieldParams = {};
 
-            we.core.msg.formFieldFinalize = function() {};
+            we.core.msg.formFieldFinalize = function(obj) {
+
+            };
             we.core.msg.formFieldReset = function() {};
-            we.core.msg.formFieldBox = function() {};
+            we.core.msg.formFieldBox = function(params, fields, callback) {
+                we.core.msg.formFieldCount++;
+                var formboxLayout = we.dom.create('div', {
+                        id: 'we-frm-' + we.core.msg.formFieldCount,
+                        className: 'we-formbox__background',
+                        renderTo: we.dom.body
+                    }),
+                    formboxBoxBody = we.dom.create('div', {
+                        className: 'we-formbox__body',
+                        renderTo: formboxLayout
+                    }),
+                    formboxBoxHeader = we.dom.create('div', {
+                        renderTo: formboxBoxBody
+                    }),
+                    formboxBoxForm = we.dom.create('form', {
+                        renderTo: formboxBoxBody
+                    }),
+                    formboxBoxButtonsBox = we.dom.create('div', {
+                        renderTo: formboxBoxBody
+                    }),
+
+                    formboxBoxClose = we.dom.document.createElement('img'),
+                    formboxBoxTitle = we.dom.document.createElement('span'),
+                    formboxBoxResetButton = we.dom.document.createElement('input'),
+                    formboxBoxCreateButton = we.dom.document.createElement('input'),
+                    formboxBoxCancelButton = we.dom.document.createElement('input'),
+                    fieldCount = fields.length;
+
+                we.formBoxCounter++;
+                we.formbox.defaultValues = [];
+
+                formboxBoxClose.onclick = function() {
+                    we.formbox.finalize(this);
+                };
+                formboxBoxCancelButton.onclick = function(){
+                    we.formbox.finalize(this);
+                };
+                formboxBoxCreateButton.onclick = function(){
+                    readForm();
+
+                    we.formbox.finalize(this);
+
+                    callback(convertToObject(we.formbox.params));
+                };
+
+                formboxBoxResetButton.className = 'we-formbox__buttons';
+                formboxBoxCreateButton.className = 'we-formbox__buttons';
+                formboxBoxCancelButton.className = 'we-formbox__buttons';
+
+                formboxBoxResetButton.value = 'Reset';
+                formboxBoxCreateButton.value = 'Create';
+                formboxBoxCancelButton.value = 'Cancel';
+
+                formboxBoxResetButton.type = 'button';
+                formboxBoxCreateButton.type = 'button';
+                formboxBoxCancelButton.type = 'button';
+
+                formboxBoxHeader.className = 'we-formbox__header';
+                formboxBoxTitle.className = 'we-formbox__title';
+                formboxBoxClose.className = 'we-formbox__close';
+                formboxBoxForm.className = 'we-formbox__form';
+                formboxBoxButtonsBox.className = 'we-formbox__button-box';
+
+                formboxBoxClose.src = 'images/icons/we-close-icon.png';
+                formboxBoxTitle.innerHTML = params.title || 'FormBox';
+                formboxBoxClose.id = 'we-frm-close-' + we.formBoxCounter;
+                formboxBoxCancelButton.id = 'we-frm-btn-close-' + we.formBoxCounter;
+                formboxBoxCreateButton.id = 'we-frm-btn-create-' + we.formBoxCounter;
+
+                for(var i = 0; i < fieldCount; i++){
+                    var obj = fields[i];
+
+                    we.formbox.defaultValues.push({
+                        name: fields[i].name,
+                        value: fields[i].defaultValue
+                    });
+
+                    obj.id = i + 1;
+
+                    formboxBoxForm.appendChild(addField(obj));
+                }
+
+                formboxBoxButtonsBox.appendChild(formboxBoxCancelButton);
+                formboxBoxButtonsBox.appendChild(formboxBoxCreateButton);
+                formboxBoxButtonsBox.appendChild(formboxBoxResetButton);
+                formboxBoxHeader.appendChild(formboxBoxTitle);
+                formboxBoxHeader.appendChild(formboxBoxClose);
+
+                formboxBoxBody.appendChild(formboxBoxHeader);
+                formboxBoxBody.appendChild(formboxBoxForm);
+                formboxBoxBody.appendChild(formboxBoxButtonsBox);
+
+                function addField(config){
+                    var box = we.dom.document.createElement('div'),
+                        label = we.dom.document.createElement('span'),
+                        input = we.dom.document.createElement('input');
+
+                    label.className = 'we-formbox-field-label';
+                    input.className = 'we-formbox-field-input';
+                    box.className = 'we-formbox-panel';
+
+                    label.textContent = config.label + ':';
+
+                    input.id = config.name;
+                    input.type = config.type;
+                    input.value = config.defaultValue || '';
+
+                    box.appendChild(label);
+                    box.appendChild(input);
+
+                    return box;
+                };
+
+                function readForm(){
+                    var arr = [];
+
+                    for(var i = 0; i < fieldCount; i++){
+                        var elem = we.general.getElement(we.formbox.defaultValues[i].name),
+                            obj = {};
+
+                        obj.name = elem.id;
+                        obj.value = elem.value || 3;
+
+                        arr.push(obj);
+                    }
+
+                    we.formbox.params = arr;
+                }
+
+                function convertToObject(arr){
+                    var obj = {},
+                        len = arr.length;
+
+                    for(var i = 0; i < len; i++){
+                        obj[arr[i].name] = arr[i].value;
+                    }
+
+                    return obj;
+                }
+            };
 
             //********************************************************
 
