@@ -4,7 +4,9 @@
     we.cell.selectionAll = 0;
     we.cell.selectionRow = 0;
     we.cell.selectionCol = 0;
+
     we.cell.onSelection = false;
+    we.cell.onSelectionRow = false;
 
     we.cell.selectionChange = function(grid) {
         var startRow = we.sheet.selectionStart.id.split('-').reverse()[1],
@@ -23,6 +25,26 @@
                 var selItems = we.dom.getElement('we-input-' + grid.sheet + '-' + i + '-' + j);
                 we.dom.addClass(selItems, 'we-cell-input-active');
                 we.sheet.selection.push(selItems);
+            }
+        }
+    };
+
+    we.cell.selectionChangeRow = function(grid) {
+        var startRow = we.sheet.selectionStart.id.split('-').reverse()[1],
+            endRow = we.sheet.selectionEnd.id.split('-').reverse()[1],
+            minRow = we.core.min(+startRow, +endRow),
+            maxRow = we.core.max(+startRow, +endRow);
+
+        we.sheet.selectionClear();
+
+        for(var i = minRow; i <= maxRow; i++){
+            var elem = we.dom.getElement('we-cell-' + grid.sheet + '-' + i + '-' + 0),
+                selItems = we.core.findClassInArray('head', elem, grid.rowArr).items,
+                len = selItems.length;
+
+            for(var j = 0; j < len; j++){
+                we.dom.addClass(selItems[j], 'we-cell-input-active');
+                we.sheet.selection.push(selItems[j]);
             }
         }
     };
@@ -52,7 +74,7 @@
             cell.className = 'we-cell-row-head';
             cell.innerHTML = 'R' + config.row;
             we.rows.currentRowHead = cell;
-            cell.onclick = function(){
+            cell.onmousedown = function(){
                 we.sheet.selectionClear();
                 var selItems = we.core.findClassInArray('head', this, grid.rowArr).items,
                     len = selItems.length;
@@ -60,6 +82,21 @@
                 for(var i = 0; i < len; i++){
                     we.dom.addClass(selItems[i], 'we-cell-input-active');
                     we.sheet.selection.push(selItems[i]);
+                }
+
+                we.sheet.selectionStart = this;
+                we.cell.onSelectionRow = true;
+            };
+
+            cell.onmouseup = function(){
+                we.cell.onSelectionRow = false;
+            };
+
+            cell.onmouseover = function(){
+                if(we.cell.onSelectionRow) {
+                    console.log('Hello!');
+                    we.sheet.selectionEnd = this;
+                    we.cell.selectionChangeRow(grid);
                 }
             };
         } else if (config.row === 0) {
