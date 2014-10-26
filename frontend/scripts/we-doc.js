@@ -1,6 +1,6 @@
 (function(){
     we.doc = {};
-    we.doc.docBody = we.general.getElement('we-container__body');
+    we.doc.docBody = we.dom.getElement('we-container__body');
     we.doc.isOpened = false;
     we.doc.isSaved = false;
 
@@ -10,7 +10,7 @@
 
     };
     we.doc.fields.init = function(){
-        var bar = we.general.getElement('we-bar'),
+        var bar = we.dom.getElement('we-bar'),
             len = bar.childNodes.length;
 
         for(var i = 0; i < len; i++){
@@ -22,7 +22,7 @@
         //create loading gif for user
         we.doc.docBody.style.background = 'url("../images/loading.gif") no-repeat center center';
 
-        we.general.loadModule('../scripts/we-sheet.js');
+        we.core.loadModule('../scripts/we-sheet.js');
         we.doc.createLayout();
 
         for (var i = 0; i < config.sheetsCount; i++) {
@@ -39,26 +39,25 @@
     we.doc.createLayout = function() {
         var docGrid = we.dom.create('div', {
                 id: 'we-doc-footer',
-                className: 'we-doc-grid'
+                className: 'we-doc-grid',
+                renderTo: we.doc.docBody
             }),
             docFooter = we.dom.create('div', {
                 id: 'we-doc-footer',
-                className: 'we-doc-footer'
+                className: 'we-doc-footer',
+                renderTo: we.doc.docBody
             }),
             sheetAddButton = we.dom.create('div', {
                 id: 'we-sheet-add-button',
                 className: 'we-sheet-add-button',
                 onclick: function() {
                     we.sheet.add();
-                }
+                },
+                renderTo: docFooter
             });
 
         we.doc.docLayout = docGrid;
         we.doc.docFooter = docFooter;
-
-        we.dom.addItem(sheetAddButton, docFooter);
-        we.dom.addItem(docGrid, we.doc.docBody);
-        we.dom.addItem(docFooter, we.doc.docBody);
     };
 
     we.doc.open = function() {

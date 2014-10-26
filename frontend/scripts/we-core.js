@@ -10,16 +10,29 @@
             //********************************************************
             //**********block for creating application core***********
             //********************************************************
-            we.core = {};
 
+            we.core = {};
             we.core.extend = function (objFrom, objTo) {
                 for(var n in objFrom){
                     if(objFrom.hasOwnProperty(n)) objTo[n] = objFrom[n];
                 }
             };
+            we.core.loadModule = function(script) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', script, false);
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        eval(xhr.responseText);
+                    }
+                };
+                xhr.send(null);
+            };
+            we.core.init = function() {
+                we.core.loadModule('../scripts/we-doc.js');
+                we.doc.fields.init();
+            };
 
             we.core.msg = {};
-
             we.core.msg.messageCount = 0;
             we.core.msg.messageBox = function(params){
                 we.core.msg.messageCount++;
@@ -59,7 +72,6 @@
                         }
                     });
             };
-
             we.core.msg.dialogCount = 0;
             we.core.msg.dialogQueue = false;
             we.core.msg.dialogTimer = 0;
@@ -170,17 +182,19 @@
 
                 we.core.msg.dialogListener(events);
             };
-
             we.core.msg.formFieldCount = 0;
             we.core.msg.formFieldDefaults = [];
             we.core.msg.formFieldParams = {};
-
             we.core.msg.formFieldFinalize = function(obj) {
+                var currentId = obj.id.split('-').reverse()[0],
+                    dlgLayout = we.dom.getElement('we-frm-' + currentId);
 
+                dlgLayout.remove();
             };
             we.core.msg.formFieldReset = function() {};
             we.core.msg.formFieldBox = function(params, fields, callback) {
                 we.core.msg.formFieldCount++;
+                we.core.msg.formFieldDefaults = [];
                 var formboxLayout = we.dom.create('div', {
                         id: 'we-frm-' + we.core.msg.formFieldCount,
                         className: 'we-formbox__background',
@@ -191,103 +205,89 @@
                         renderTo: formboxLayout
                     }),
                     formboxBoxHeader = we.dom.create('div', {
+                        className: 'we-formbox__header',
                         renderTo: formboxBoxBody
                     }),
                     formboxBoxForm = we.dom.create('form', {
+                        className: 'we-formbox__form',
                         renderTo: formboxBoxBody
                     }),
                     formboxBoxButtonsBox = we.dom.create('div', {
+                        className: 'we-formbox__button-box',
                         renderTo: formboxBoxBody
                     }),
-
-                    formboxBoxClose = we.dom.document.createElement('img'),
-                    formboxBoxTitle = we.dom.document.createElement('span'),
-                    formboxBoxResetButton = we.dom.document.createElement('input'),
-                    formboxBoxCreateButton = we.dom.document.createElement('input'),
-                    formboxBoxCancelButton = we.dom.document.createElement('input'),
+                    formboxBoxTitle = we.dom.create('span', {
+                        className: 'we-formbox__title',
+                        innerHTML: params.title || 'FormBox',
+                        renderTo: formboxBoxHeader
+                    }),
+                    formboxBoxClose = we.dom.create('img', {
+                        id: 'we-frm-close-' + we.core.msg.formFieldCount,
+                        className: 'we-formbox__close',
+                        src: 'images/icons/we-close-icon.png',
+                        onclick: function(){
+                            we.core.msg.formFieldFinalize(this);
+                        },
+                        renderTo: formboxBoxHeader
+                    }),
+                    formboxBoxCancelButton = we.dom.create('input', {
+                        id: 'we-frm-btn-close-' + we.core.msg.formFieldCount,
+                        className: 'we-formbox__buttons',
+                        type: 'button',
+                        value: 'Cancel',
+                        onclick: function(){
+                            we.core.msg.formFieldFinalize(this);
+                        },
+                        renderTo: formboxBoxButtonsBox
+                    }),
+                    formboxBoxCreateButton = we.dom.create('input', {
+                        id: 'we-frm-btn-create-' + we.core.msg.formFieldCount,
+                        className: 'we-formbox__buttons',
+                        type: 'button',
+                        value: 'Create',
+                        onclick: function(){
+                            readForm();
+                            we.core.msg.formFieldFinalize(this);
+                            callback(convertToObject(we.core.msg.formFieldParams));
+                        },
+                        renderTo: formboxBoxButtonsBox
+                    }),
+                    formboxBoxResetButton = we.dom.create('input', {
+                        id: 'we-frm-btn-reset-' + we.core.msg.formFieldCount,
+                        className: 'we-formbox__buttons',
+                        type: 'button',
+                        value: 'Reset',
+                        onclick: function(){},
+                        renderTo: formboxBoxButtonsBox
+                    }),
                     fieldCount = fields.length;
-
-                we.formBoxCounter++;
-                we.formbox.defaultValues = [];
-
-                formboxBoxClose.onclick = function() {
-                    we.formbox.finalize(this);
-                };
-                formboxBoxCancelButton.onclick = function(){
-                    we.formbox.finalize(this);
-                };
-                formboxBoxCreateButton.onclick = function(){
-                    readForm();
-
-                    we.formbox.finalize(this);
-
-                    callback(convertToObject(we.formbox.params));
-                };
-
-                formboxBoxResetButton.className = 'we-formbox__buttons';
-                formboxBoxCreateButton.className = 'we-formbox__buttons';
-                formboxBoxCancelButton.className = 'we-formbox__buttons';
-
-                formboxBoxResetButton.value = 'Reset';
-                formboxBoxCreateButton.value = 'Create';
-                formboxBoxCancelButton.value = 'Cancel';
-
-                formboxBoxResetButton.type = 'button';
-                formboxBoxCreateButton.type = 'button';
-                formboxBoxCancelButton.type = 'button';
-
-                formboxBoxHeader.className = 'we-formbox__header';
-                formboxBoxTitle.className = 'we-formbox__title';
-                formboxBoxClose.className = 'we-formbox__close';
-                formboxBoxForm.className = 'we-formbox__form';
-                formboxBoxButtonsBox.className = 'we-formbox__button-box';
-
-                formboxBoxClose.src = 'images/icons/we-close-icon.png';
-                formboxBoxTitle.innerHTML = params.title || 'FormBox';
-                formboxBoxClose.id = 'we-frm-close-' + we.formBoxCounter;
-                formboxBoxCancelButton.id = 'we-frm-btn-close-' + we.formBoxCounter;
-                formboxBoxCreateButton.id = 'we-frm-btn-create-' + we.formBoxCounter;
 
                 for(var i = 0; i < fieldCount; i++){
                     var obj = fields[i];
-
-                    we.formbox.defaultValues.push({
+                    we.core.msg.formFieldDefaults.push({
                         name: fields[i].name,
                         value: fields[i].defaultValue
                     });
-
                     obj.id = i + 1;
-
-                    formboxBoxForm.appendChild(addField(obj));
+                    we.dom.addItem(addField(obj) , formboxBoxForm);
                 }
 
-                formboxBoxButtonsBox.appendChild(formboxBoxCancelButton);
-                formboxBoxButtonsBox.appendChild(formboxBoxCreateButton);
-                formboxBoxButtonsBox.appendChild(formboxBoxResetButton);
-                formboxBoxHeader.appendChild(formboxBoxTitle);
-                formboxBoxHeader.appendChild(formboxBoxClose);
-
-                formboxBoxBody.appendChild(formboxBoxHeader);
-                formboxBoxBody.appendChild(formboxBoxForm);
-                formboxBoxBody.appendChild(formboxBoxButtonsBox);
-
                 function addField(config){
-                    var box = we.dom.document.createElement('div'),
-                        label = we.dom.document.createElement('span'),
-                        input = we.dom.document.createElement('input');
-
-                    label.className = 'we-formbox-field-label';
-                    input.className = 'we-formbox-field-input';
-                    box.className = 'we-formbox-panel';
-
-                    label.textContent = config.label + ':';
-
-                    input.id = config.name;
-                    input.type = config.type;
-                    input.value = config.defaultValue || '';
-
-                    box.appendChild(label);
-                    box.appendChild(input);
+                    var box = we.dom.create('div', {
+                            className: 'we-formbox-panel'
+                        }),
+                        label = we.dom.create('span', {
+                            className: 'we-formbox-field-label',
+                            textContent: config.label + ':',
+                            renderTo: box
+                        }),
+                        input = we.dom.create('input', {
+                            id: config.name,
+                            className: 'we-formbox-field-input',
+                            type: config.type,
+                            value: config.defaultValue || '',
+                            renderTo: box
+                        });
 
                     return box;
                 };
@@ -296,7 +296,7 @@
                     var arr = [];
 
                     for(var i = 0; i < fieldCount; i++){
-                        var elem = we.general.getElement(we.formbox.defaultValues[i].name),
+                        var elem = we.dom.getElement(we.core.msg.formFieldDefaults[i].name),
                             obj = {};
 
                         obj.name = elem.id;
@@ -305,7 +305,7 @@
                         arr.push(obj);
                     }
 
-                    we.formbox.params = arr;
+                    we.core.msg.formFieldParams = arr;
                 }
 
                 function convertToObject(arr){
@@ -326,34 +326,35 @@
             //********************************************************
             //****************block for work with DOM*****************
             //********************************************************
+
             we.dom = {};
-
             we.dom.document = document;
-
             we.dom.body = document.body;
-
             we.dom.getElement = function(id) {
                 return we.dom.document.getElementById(id) || null;
             };
-
             we.dom.create = function(tag, config){
                 var elem = we.dom.document.createElement(tag);
 
                 we.core.extend(config, elem);
 
-                if(config.renderTo) we.dom.addItem(elem, config.renderTo);
+                if(config.renderTo && config.before) {
+                    we.dom.addItemBefore(elem, config.renderTo, config.before);
+                } else if(config.renderTo) {
+                    we.dom.addItem(elem, config.renderTo);
+                }
 
                 return elem;
             };
-
             we.dom.addItem = function(e, renderTo) {
                 renderTo.appendChild(e);
             };
-
+            we.dom.addItemBefore = function(e, renderTo, before) {
+                renderTo.insertBefore(e, before);
+            };
             we.dom.setClass = function(e, className) {
                 e.className = className;
             };
-
             we.dom.addClass = function(e, className) {
                 var classList = e.className,
                     classArr = classList.split(' '),
@@ -365,7 +366,6 @@
 
                 e.className = newClass;
             };
-
             we.dom.removeClass = function(e, className) {
                 var classList = e.className,
                     classArr = classList.split(' '),
@@ -382,178 +382,12 @@
             };
 
             //********************************************************
-
-            we.formbox = {};
-            we.formbox.finalize = function(obj){
-                var currentId = obj.id.split('-').reverse()[0],
-                    dlgLayout = we.general.getElement('we-frm-' + currentId);
-
-                dlgLayout.remove();
-            };
-            we.formbox.defaultValues = [];
-            we.formbox.params = [];
-
-            we.formbox.reset = function() {};
-
-            we.formBoxCounter = 0;
-            we.formBox = function(params, fields, callback){
-                var formboxLayout = we.dom.document.createElement('div'),
-                    formboxBoxBody = we.dom.document.createElement('div'),
-                    formboxBoxHeader = we.dom.document.createElement('div'),
-                    formboxBoxClose = we.dom.document.createElement('img'),
-                    formboxBoxTitle = we.dom.document.createElement('span'),
-                    formboxBoxForm = we.dom.document.createElement('form'),
-                    formboxBoxButtonsBox = we.dom.document.createElement('div'),
-                    formboxBoxResetButton = we.dom.document.createElement('input'),
-                    formboxBoxCreateButton = we.dom.document.createElement('input'),
-                    formboxBoxCancelButton = we.dom.document.createElement('input'),
-                    fieldCount = fields.length;
-
-                we.formBoxCounter++;
-                we.formbox.defaultValues = [];
-
-                formboxBoxClose.onclick = function() {
-                    we.formbox.finalize(this);
-                };
-
-                formboxBoxCancelButton.onclick = function(){
-                    we.formbox.finalize(this);
-                };
-                formboxBoxCreateButton.onclick = function(){
-                    readForm();
-
-                    we.formbox.finalize(this);
-
-                    callback(convertToObject(we.formbox.params));
-                };
-
-                formboxBoxResetButton.className = 'we-formbox__buttons';
-                formboxBoxCreateButton.className = 'we-formbox__buttons';
-                formboxBoxCancelButton.className = 'we-formbox__buttons';
-
-                formboxBoxResetButton.value = 'Reset';
-                formboxBoxCreateButton.value = 'Create';
-                formboxBoxCancelButton.value = 'Cancel';
-
-                formboxBoxResetButton.type = 'button';
-                formboxBoxCreateButton.type = 'button';
-                formboxBoxCancelButton.type = 'button';
-
-                formboxLayout.className = 'we-formbox__background';
-                formboxBoxBody.className = 'we-formbox__body';
-                formboxBoxHeader.className = 'we-formbox__header';
-                formboxBoxTitle.className = 'we-formbox__title';
-                formboxBoxClose.className = 'we-formbox__close';
-                formboxBoxForm.className = 'we-formbox__form';
-                formboxBoxButtonsBox.className = 'we-formbox__button-box';
-
-                formboxBoxClose.src = 'images/icons/we-close-icon.png';
-                formboxBoxTitle.innerHTML = params.title || 'FormBox';
-                formboxLayout.id = 'we-frm-' + we.formBoxCounter;
-                formboxBoxClose.id = 'we-frm-close-' + we.formBoxCounter;
-                formboxBoxCancelButton.id = 'we-frm-btn-close-' + we.formBoxCounter;
-                formboxBoxCreateButton.id = 'we-frm-btn-create-' + we.formBoxCounter;
-
-                for(var i = 0; i < fieldCount; i++){
-                    var obj = fields[i];
-
-                    we.formbox.defaultValues.push({
-                        name: fields[i].name,
-                        value: fields[i].defaultValue
-                    });
-
-                    obj.id = i + 1;
-
-                    formboxBoxForm.appendChild(addField(obj));
-                }
-
-                formboxBoxButtonsBox.appendChild(formboxBoxCancelButton);
-                formboxBoxButtonsBox.appendChild(formboxBoxCreateButton);
-                formboxBoxButtonsBox.appendChild(formboxBoxResetButton);
-                formboxBoxHeader.appendChild(formboxBoxTitle);
-                formboxBoxHeader.appendChild(formboxBoxClose);
-                formboxBoxBody.appendChild(formboxBoxHeader);
-                formboxBoxBody.appendChild(formboxBoxForm);
-                formboxBoxBody.appendChild(formboxBoxButtonsBox);
-                formboxLayout.appendChild(formboxBoxBody);
-                we.dom.body.appendChild(formboxLayout);
-
-                function addField(config){
-                    var box = we.dom.document.createElement('div'),
-                        label = we.dom.document.createElement('span'),
-                        input = we.dom.document.createElement('input');
-
-                    label.className = 'we-formbox-field-label';
-                    input.className = 'we-formbox-field-input';
-                    box.className = 'we-formbox-panel';
-
-                    label.textContent = config.label + ':';
-
-                    input.id = config.name;
-                    input.type = config.type;
-                    input.value = config.defaultValue || '';
-
-                    box.appendChild(label);
-                    box.appendChild(input);
-
-                    return box;
-                };
-
-                function readForm(){
-                    var arr = [];
-
-                    for(var i = 0; i < fieldCount; i++){
-                        var elem = we.general.getElement(we.formbox.defaultValues[i].name),
-                            obj = {};
-
-                        obj.name = elem.id;
-                        obj.value = elem.value || 3;
-
-                        arr.push(obj);
-                    }
-
-                    we.formbox.params = arr;
-                }
-
-                function convertToObject(arr){
-                    var obj = {},
-                        len = arr.length;
-
-                    for(var i = 0; i < len; i++){
-                        obj[arr[i].name] = arr[i].value;
-                    }
-
-                    return obj;
-                }
-            };
-
             //create general settings
-            we.general = {};
 
-            we.general.getElement = function(selector){
-                return we.dom.document.getElementById(selector);
-            };
-
-            we.general.loadModule = function(script){
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', script, false);
-                xhr.onreadystatechange = function(){
-                    if(xhr.readyState === 4 && xhr.status === 200){
-                        eval(xhr.responseText);
-                    }
-                };
-                xhr.send(null);
-            };
-
-            we.general.init = function(){
-                this.loadModule('../scripts/we-doc.js');
-                we.doc.fields.init();
-            };
-
-            we.newDoc = we.general.getElement('we-new-doc');
+            we.newDoc = we.dom.getElement('we-new-doc');
             we.newDoc.onclick = function() {
                 if(!we.doc.isOpened){
-                    we.formBox(
+                    we.core.msg.formFieldBox(
                         {
                             title: 'New Document'
                         },[
@@ -579,7 +413,7 @@
                             accept: function() {
                                 we.doc.save();
                                 we.doc.close();
-                                we.formBox(
+                                we.core.msg.formFieldBox(
                                     {
                                         title: 'New Document'
                                     },[
@@ -611,7 +445,7 @@
                         }, {
                             accept: function() {
                                 we.doc.close();
-                                we.formBox(
+                                we.core.msg.formFieldBox(
                                     {
                                         title: 'New Document'
                                     },[
@@ -640,7 +474,7 @@
                 }
             };
 
-            we.saveDoc = we.general.getElement('we-save-doc');
+            we.saveDoc = we.dom.getElement('we-save-doc');
             we.saveDoc.onclick = function() {
                 if(!we.doc.isOpened){
                     we.core.msg.messageBox({
@@ -661,7 +495,7 @@
                 }
             };
 
-            we.openDoc = we.general.getElement('we-open-doc');
+            we.openDoc = we.dom.getElement('we-open-doc');
             we.openDoc.onclick = function() {
                 if(we.doc.isOpened){
                     if(we.doc.isSaved){
@@ -688,7 +522,7 @@
                             accept: function() {
                                 we.doc.save();
                                 we.doc.close();
-                                we.formBox(
+                                we.core.msg.formBox(
                                     {
                                         title: 'New Document'
                                     },[
@@ -719,7 +553,7 @@
                 }
             };
 
-            we.general.init();
+            we.core.init();
         }
     }
 })()

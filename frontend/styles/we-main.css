@@ -240,10 +240,22 @@ body,
     overflow: hidden;
 }
 
-.we-cell-head{
+.we-cell-main{
+    background: url('../images/icons/southeast-arrow.png') #c7c7c7 no-repeat bottom right;
+}
+
+.we-cell-row-head{
     width: 50px;
     height: 20px;
     border: 1px solid #777777;
+    border-left: none;
+    overflow: hidden;
+    background-color: #c7c7c7;
+}
+
+.we-cell-col-head{
+    border: 1px solid #777777;
+    border-top: none;
     overflow: hidden;
     background-color: #c7c7c7;
 }
