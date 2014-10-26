@@ -14,9 +14,14 @@
             len = bar.childNodes.length;
 
         for(var i = 0; i < len; i++){
-            console.log(bar.childNodes[i]);
+            if(bar.childNodes[i].nodeType === 1)
+                bar.childNodes[i].disabled = false;
         }
     };
+
+    we.doc.calcRange = function(){};
+
+    we.doc.formulaField = we.dom.getElement('we-formula-fld');
 
     we.doc.create = function(config) {
         //create loading gif for user

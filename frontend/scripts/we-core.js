@@ -29,7 +29,21 @@
             };
             we.core.init = function() {
                 we.core.loadModule('../scripts/we-doc.js');
-                we.doc.fields.init();
+            };
+            we.core.findClassInArray = function(key, value, array) {
+                var len = array.length;
+
+                for (var i = 0; i < len; i++){
+                    if(array[i][key] === value) return array[i];
+                }
+
+                return null;
+            };
+            we.core.max = function(a, b) {
+                return a > b ? a : b;
+            };
+            we.core.min = function(a, b) {
+                return a < b ? a : b;
             };
 
             we.core.msg = {};
@@ -404,6 +418,7 @@
                                 name: 'sheetsCount'
                             }
                         ], we.doc.create);
+                    we.doc.fields.init();
                 } else{
                     if(we.doc.isSaved){
                         we.core.msg.dialogBox({
@@ -430,6 +445,7 @@
                                             name: 'sheetsCount'
                                         }
                                     ], we.doc.create);
+                                we.doc.fields.init();
                             },
                             decline: function() {
                                 console.log('User declined!');
@@ -444,6 +460,7 @@
                             text: 'We close current document, and you create the new one. Do you want to save current document before?'
                         }, {
                             accept: function() {
+                                we.doc.save();
                                 we.doc.close();
                                 we.core.msg.formFieldBox(
                                     {
@@ -462,6 +479,7 @@
                                             name: 'sheetsCount'
                                         }
                                     ], we.doc.create);
+                                we.doc.fields.init();
                             },
                             decline: function() {
                                 console.log('User declined!');

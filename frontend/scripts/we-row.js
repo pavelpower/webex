@@ -2,6 +2,9 @@
     we.rows = {};
     we.rows.count = 100;
 
+    we.rows.currentRowHead = null;
+    we.rows.currentRow = [];
+
     we.rows.insertTo = function(grid, config) {
         var row = we.dom.create('tr', {
             id: config.id,
@@ -9,8 +12,11 @@
             renderTo: grid
         });
 
+        we.rows.currentRow = [];
+        we.rows.currentRowHead = null;
+
         for(var i = 0; i < we.cols.count; i++){
-            we.cell.insertTo(row, {
+            we.cell.insertTo(grid, row, {
                 row: config.row,
                 col: i,
                 id: 'we-cell-' + grid.sheet + '-' + config.row + '-' + i,
@@ -18,5 +24,10 @@
                 inputId: 'we-input-' + grid.sheet + '-' + config.row + '-' + i
             });
         }
+
+        grid.rowArr.push({
+            head: we.rows.currentRowHead,
+            items: we.rows.currentRow
+        });
     };
 })()
