@@ -11,10 +11,10 @@
             startCol = we.sheet.selectionStart.id.split('-').reverse()[0],
             endRow = we.sheet.selectionEnd.id.split('-').reverse()[1],
             endCol = we.sheet.selectionEnd.id.split('-').reverse()[0],
-            maxRow = we.core.max(startRow, endRow),
-            minRow = we.core.min(startRow, endRow),
-            maxCol = we.core.max(startCol, endCol),
-            minCol = we.core.min(startCol, endCol);
+            maxRow = we.core.max(+startRow, +endRow),
+            minRow = we.core.min(+startRow, +endRow),
+            maxCol = we.core.max(+startCol, +endCol),
+            minCol = we.core.min(+startCol, +endCol);
 
         we.sheet.selectionClear();
 
