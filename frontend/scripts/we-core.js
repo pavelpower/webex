@@ -334,6 +334,9 @@
                 }
             };
 
+            //TODO: create standard context menu
+            we.core.msg.contextmenu = function() {};
+
             //********************************************************
 
 

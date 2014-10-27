@@ -13,6 +13,12 @@
     we.sheet.selectionStart = null;
     we.sheet.selectionEnd = null;
 
+    we.sheet.contextmenu = null;
+    we.sheet.contextmenuClear = function(){
+        we.sheet.contextmenu.linkToParent.onContextMenu = false;
+        we.sheet.contextmenu.remove();
+    };
+
     we.sheet.selection = [];
     we.sheet.selectionClear = function () {
         var len = we.sheet.selection.length;
@@ -65,6 +71,7 @@
                 id: 'we-sheet-label-' + we.sheet.count,
                 className: 'we-grid-sheet-label',
                 textContent: 'Sheet' + we.sheet.count,
+                onContextMenu: false,
                 onclick: function() {
                     var currentId = this.id.split('-').reverse()[0];
 
@@ -73,6 +80,30 @@
                     we.sheet.active.body = we.dom.getElement('we-sheet-body-' + currentId);
                     we.dom.addClass(we.sheet.active.label, 'we-grid-sheet-label-active');
                     we.dom.addClass(we.sheet.active.body, 'we-grid-sheet-body-active');
+                },
+                oncontextmenu: function(e){
+                    if(this.onContextMenu) {
+                        console.log('There is already contextmenu exist!');
+                    } else {
+                        if(we.sheet.contextmenu) {
+                            we.sheet.contextmenuClear();
+                        }
+
+                        var contextmenu = we.dom.create('div', {
+                                className: 'we-sheet-label-contextmenu',
+                                linkToParent: this,
+                                renderTo: we.dom.body
+                            });
+
+                        contextmenu.style.position = 'absolute';
+                        contextmenu.style.left = e.x + 'px';
+                        contextmenu.style.top = e.y - 150 + 'px';
+
+                        this.onContextMenu = true;
+                        we.sheet.contextmenu = contextmenu;
+                    }
+
+                    e.preventDefault();
                 },
                 renderTo: we.doc.docFooter,
                 before: addButton
