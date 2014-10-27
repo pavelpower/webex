@@ -26,6 +26,9 @@
     we.doc.create = function(config) {
         //create loading gif for user
         we.doc.docBody.style.background = 'url("../images/loading.gif") no-repeat center center';
+        we.doc.docBody.onclick = function(){
+            we.sheet.contextmenuClear();
+        };
 
         we.core.loadModule('../scripts/we-sheet.js');
         we.doc.createLayout();

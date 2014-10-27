@@ -335,7 +335,15 @@
             };
 
             //TODO: create standard context menu
-            we.core.msg.contextmenu = function() {};
+            we.core.msg.contextmenu = function(params) {
+
+            };
+
+            //TODO: create standard pallete of drafts (color-picker etc.)
+            we.core.pallete = {};
+            we.core.pallete.colorPicker = function(){
+
+            };
 
             //********************************************************
 
