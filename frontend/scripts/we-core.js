@@ -341,8 +341,58 @@
 
             //TODO: create standard pallete of drafts (color-picker etc.)
             we.core.pallete = {};
-            we.core.pallete.colorPicker = function(){
 
+            we.core.pallete.colorPicker = {};
+            we.core.pallete.colorPicker.rows = 3;
+            we.core.pallete.colorPicker.colors = [
+                '#000000',
+                '#FFFFFF',
+                '#FF0000',
+                '#00FF00',
+                '#0000FF',
+                '#777777',
+                '#FFFF00',
+                '#FF00FF',
+                '#00FFFF'
+            ];
+            we.core.pallete.colorPicker.create = function(renderTo){
+                var colorPicker = we.dom.create('div', {
+                        className: 'we-color-picker',
+                        renderTo: renderTo
+                    }),
+                    colorTable = we.dom.create('table', {
+                        className: 'we-color-picker-tab',
+                        renderTo: colorPicker
+                    }),
+                    defaultButton = we.dom.create('input', {
+                        type: 'button',
+                        value: 'Default',
+                        className: 'we-color-picker-default-btn',
+                        onclick: function(){
+                            renderTo.linkToParent.removeAttribute('style');
+                            we.sheet.contextmenuClear();
+                        },
+                        renderTo: colorPicker
+                    }),
+                    colorCount = we.core.pallete.colorPicker.colors.length,
+                    rowsInt = colorCount/we.core.pallete.colorPicker.rows;
+                    rowsCount = (colorCount % we.core.pallete.colorPicker.rows === 0) ? rowsInt : (Math.floor(rowsInt) + 1),
+                    colorCounter = 0;
+
+                for(var i = 0; i < rowsCount; i++){
+                    var row = colorTable.insertRow(0);
+                    for(var j = 0; j < we.core.pallete.colorPicker.rows; j++){
+                        var cell = row.insertCell(0);
+                        cell.className = 'we-color-picker-cell';
+                        cell.style.background = we.core.pallete.colorPicker.colors[colorCounter];
+                        cell.thisColor = we.core.pallete.colorPicker.colors[colorCounter];
+                        cell.onclick = function(){
+                            renderTo.linkToParent.style.background = this.thisColor;
+                            we.sheet.contextmenuClear();
+                        };
+                        colorCounter++;
+                    }
+                }
             };
 
             //********************************************************

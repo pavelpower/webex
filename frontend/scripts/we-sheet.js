@@ -99,6 +99,8 @@
                         contextmenu.style.left = e.x + 'px';
                         contextmenu.style.top = e.y - 150 + 'px';
 
+                        we.core.pallete.colorPicker.create(contextmenu);
+
                         this.onContextMenu = true;
                         we.sheet.contextmenu = contextmenu;
                     }
