@@ -104,6 +104,7 @@
                             items: [
                                 {
                                     type: 'colorPicker',
+                                    isDialog: false,
                                     label: 'Label color',
                                     config: {
                                         label: 'Sheet label color:'
@@ -111,9 +112,32 @@
                                 },
                                 {
                                     type: 'changeName',
+                                    isDialog: false,
                                     label: 'Sheet name',
                                     config: {
                                         label: 'Sheet name:'
+                                    }
+                                },
+                                {
+                                    type: 'deletion',
+                                    isDialog: true,
+                                    label: 'Delete',
+                                    config: {
+                                        params: {
+                                            title: 'Delete sheet',
+                                            text: 'All data will be removed! Do you want to continue?'
+                                        },
+                                        events: {
+                                            accept: function(){
+
+                                            },
+                                            decline: function(){
+
+                                            },
+                                            cancel: function(){
+
+                                            }
+                                        }
                                     }
                                 }
                             ]

@@ -424,6 +424,7 @@
                                 this.style.color = '#FF0000';
                             }
                         },
+                        value: config.parentSheet.innerHTML,
                         renderTo: changeName
                     }),
                     changeButton = we.dom.create('input', {
@@ -453,7 +454,8 @@
             we.core.msg.contextmenu = {};
             we.core.msg.contextmenu.items = {
                 colorPicker: we.core.pallete.colorPicker.create,
-                changeName: we.core.pallete.changeName.create
+                changeName: we.core.pallete.changeName.create,
+                deletion: we.core.pallete.delete
             };
             we.core.msg.contextmenu.create = function(params) {
                 var container = we.dom.create('div', {
@@ -464,7 +466,6 @@
                             if(this.activeItem) this.activeItem.removeAttribute('style');
                         },
                         onclick: function() {
-                            console.log('Hello!');
                             this.hideActiveItem();
                         },
                         renderTo: params.renderTo
@@ -490,12 +491,19 @@
                         }),
                         type = params.items[i].type;
 
-                    menuItem.childItem = we.core.msg.contextmenu.items[type](submenu, {
-                        parentSheet: params.renderTo.linkToParent,
-                        label: params.items[i].config.label
-                    });
+                    if(!params.items[i].isDialog){
+                        menuItem.childItem = we.core.msg.contextmenu.items[type](submenu, {
+                            parentSheet: params.renderTo.linkToParent,
+                            label: params.items[i].config.label
+                        });
 
-                    container.items.push(menuItem.childItem);
+                        container.items.push(menuItem.childItem);
+                    } else{
+                        menuItem.config = params.items[i].config;
+                        menuItem.onclick = function(){
+                            we.core.msg.dialogBox(this.config.params, this.config.events);
+                        };
+                    }
                 }
 
             };
@@ -562,6 +570,8 @@
             };
 
             //********************************************************
+
+            //TODO: refactoring
             //create general settings
 
             we.newDoc = we.dom.getElement('we-new-doc');
