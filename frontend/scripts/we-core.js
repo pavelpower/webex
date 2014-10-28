@@ -396,9 +396,17 @@
             };
 
             we.core.pallete.changeName = {};
+            we.core.pallete.changeName.validate = function(text){
+                var regExp = /^[A-Za-z]+[0-9_]{0,}$/gi;
+
+                return text.search(regExp) === -1 ? false : true;
+            };
             we.core.pallete.changeName.create = function(renderTo, config) {
                 var changeName = we.dom.create('div', {
                         className: 'we-change-name',
+                        onclick: function(e){
+                            e.stopPropagation();
+                        },
                         renderTo: renderTo
                     }),
                     label = we.dom.create('span', {
@@ -409,13 +417,32 @@
                     newName = we.dom.create('input', {
                         type: 'text',
                         className: 'we-change-name-field',
+                        oninput: function(){
+                            if(we.core.pallete.changeName.validate(this.value)) {
+                                this.removeAttribute('style');
+                            } else {
+                                this.style.color = '#FF0000';
+                            }
+                        },
                         renderTo: changeName
                     }),
                     changeButton = we.dom.create('input', {
                         type: 'button',
                         className: 'we-change-name-btn',
+                        unitedInput: newName,
                         value: 'Change',
                         parentSheet: config.parentSheet,
+                        onclick: function(){
+                            if(we.core.pallete.changeName.validate(this.unitedInput.value)){
+                                this.parentSheet.innerHTML = this.unitedInput.value;
+                                we.sheet.contextmenuClear();
+                            } else{
+                                we.core.msg.messageBox({
+                                    title: 'Warning!',
+                                    text: 'Incorrect sheet name. Please, use for sheet name combination of letters (register does not matter), "_"-symbol, or numbers. Sheet name, can not start with numbers, or "-"-symbol.'
+                                });
+                            }
+                        },
                         renderTo: changeName
                     });
 
@@ -437,6 +464,7 @@
                             if(this.activeItem) this.activeItem.removeAttribute('style');
                         },
                         onclick: function() {
+                            console.log('Hello!');
                             this.hideActiveItem();
                         },
                         renderTo: params.renderTo
@@ -471,7 +499,6 @@
                 }
 
             };
-
 
             //********************************************************
 
