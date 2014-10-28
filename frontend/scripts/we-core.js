@@ -334,11 +334,6 @@
                 }
             };
 
-            //TODO: create standard context menu
-            we.core.msg.contextmenu = function(params) {
-
-            };
-
             //TODO: create standard pallete of drafts (color-picker etc.)
             we.core.pallete = {};
 
@@ -372,9 +367,10 @@
                     defaultButton = we.dom.create('input', {
                         type: 'button',
                         value: 'Default',
+                        parentSheet: config.parentSheet,
                         className: 'we-color-picker-default-btn',
                         onclick: function(){
-                            renderTo.linkToParent.removeAttribute('style');
+                            this.parentSheet.removeAttribute('style');
                             we.sheet.contextmenuClear();
                         },
                         renderTo: colorPicker
@@ -384,9 +380,10 @@
                 for(var i = 0; i < colorCount; i++){
                     var color = we.dom.create('li', {
                         className: 'we-color-picker-cell',
+                        parentSheet: config.parentSheet,
                         color: we.core.pallete.colorPicker.colors[i],
                         onclick: function(){
-                            renderTo.linkToParent.style.background = this.color;
+                            this.parentSheet.style.background = this.color;
                             we.sheet.contextmenuClear();
                         },
                         renderTo: colorTable
@@ -394,6 +391,8 @@
 
                     color.style.background = we.core.pallete.colorPicker.colors[i];
                 }
+
+                return colorPicker;
             };
 
             we.core.pallete.changeName = {};
@@ -416,9 +415,63 @@
                         type: 'button',
                         className: 'we-change-name-btn',
                         value: 'Change',
+                        parentSheet: config.parentSheet,
                         renderTo: changeName
                     });
+
+                return changeName;
             };
+
+            //TODO: create standard context menu
+            we.core.msg.contextmenu = {};
+            we.core.msg.contextmenu.items = {
+                colorPicker: we.core.pallete.colorPicker.create,
+                changeName: we.core.pallete.changeName.create
+            };
+            we.core.msg.contextmenu.create = function(params) {
+                var container = we.dom.create('div', {
+                        className: 'we-contextmenu-container',
+                        items: [],
+                        activeItem: null,
+                        hideActiveItem: function(){
+                            if(this.activeItem) this.activeItem.removeAttribute('style');
+                        },
+                        onclick: function() {
+                            this.hideActiveItem();
+                        },
+                        renderTo: params.renderTo
+                    }),
+                    submenu = we.dom.create('div', {
+                        className: 'we-contextmenu-submenu',
+                        renderTo: container
+                    }),
+                    itemsCount = params.items.length;
+
+                for(var i = 0; i < itemsCount; i++){
+                    var menuItem = we.dom.create('div', {
+                            className: 'we-contextmenu-item',
+                            innerHTML: params.items[i].label,
+                            container: container,
+                            onclick: function(e){
+                                this.container.hideActiveItem();
+                                this.container.activeItem = this.childItem;
+                                this.childItem.style.display = 'block';
+                                e.stopPropagation();
+                            },
+                            renderTo: container
+                        }),
+                        type = params.items[i].type;
+
+                    menuItem.childItem = we.core.msg.contextmenu.items[type](submenu, {
+                        parentSheet: params.renderTo.linkToParent,
+                        label: params.items[i].config.label
+                    });
+
+                    container.items.push(menuItem.childItem);
+                }
+
+            };
+
 
             //********************************************************
 

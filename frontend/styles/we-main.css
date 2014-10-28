@@ -381,6 +381,7 @@ body,
 
 .we-color-picker,
 .we-change-name{
+    display: none;
     margin: 2px;
     border-bottom: 1px solid #e7e7e7;
 }
@@ -392,8 +393,31 @@ body,
     box-sizing: border-box;
 }
 
+.we-contextmenu-container{
+    position: relative;
+    height: 100px;
+    padding: 2px;
+}
 
+.we-contextmenu-item{
+    height: 20px;
+    margin: 1px;
+    background: #C7C7C7;
+}
 
+.we-contextmenu-item:hover{
+    background: #A7A7A7;
+    cursor: pointer;
+}
+
+.we-contextmenu-submenu{
+    position: absolute;
+    left: 137px;
+    top: -1px;
+    height: auto;
+    width: 136px;
+    background: #d7d7d7;
+}
 
 
 

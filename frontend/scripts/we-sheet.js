@@ -99,11 +99,24 @@
                         contextmenu.style.left = e.x + 'px';
                         contextmenu.style.top = e.y - 150 + 'px';
 
-                        we.core.pallete.colorPicker.create(contextmenu, {
-                            label: 'Sheet label color:'
-                        });
-                        we.core.pallete.changeName.create(contextmenu, {
-                            label: 'Sheet name:'
+                        we.core.msg.contextmenu.create({
+                            renderTo: contextmenu,
+                            items: [
+                                {
+                                    type: 'colorPicker',
+                                    label: 'Sheet label',
+                                    config: {
+                                        label: 'Sheet label color:'
+                                    }
+                                },
+                                {
+                                    type: 'changeName',
+                                    label: 'Sheet name',
+                                    config: {
+                                        label: 'Sheet name:'
+                                    }
+                                }
+                            ]
                         });
 
                         this.onContextMenu = true;
