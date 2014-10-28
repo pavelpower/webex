@@ -400,6 +400,11 @@ body,
 }
 
 .we-contextmenu-item{
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: Arial;
+    padding: 0 0 0 5px;
     height: 20px;
     margin: 1px;
     background: #C7C7C7;

@@ -104,7 +104,7 @@
                             items: [
                                 {
                                     type: 'colorPicker',
-                                    label: 'Sheet label',
+                                    label: 'Label color',
                                     config: {
                                         label: 'Sheet label color:'
                                     }
