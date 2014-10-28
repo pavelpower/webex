@@ -343,7 +343,7 @@
             we.core.pallete = {};
 
             we.core.pallete.colorPicker = {};
-            we.core.pallete.colorPicker.rows = 3;
+            we.core.pallete.colorPicker.rows = 5;
             we.core.pallete.colorPicker.colors = [
                 '#000000',
                 '#FFFFFF',
@@ -355,12 +355,17 @@
                 '#FF00FF',
                 '#00FFFF'
             ];
-            we.core.pallete.colorPicker.create = function(renderTo){
+            we.core.pallete.colorPicker.create = function(renderTo, config){
                 var colorPicker = we.dom.create('div', {
                         className: 'we-color-picker',
                         renderTo: renderTo
                     }),
-                    colorTable = we.dom.create('table', {
+                    label = we.dom.create('span', {
+                        className: 'we-color-picker-label',
+                        innerHTML: config.label,
+                        renderTo: colorPicker
+                    }),
+                    colorTable = we.dom.create('ul', {
                         className: 'we-color-picker-tab',
                         renderTo: colorPicker
                     }),
@@ -374,25 +379,45 @@
                         },
                         renderTo: colorPicker
                     }),
-                    colorCount = we.core.pallete.colorPicker.colors.length,
-                    rowsInt = colorCount/we.core.pallete.colorPicker.rows;
-                    rowsCount = (colorCount % we.core.pallete.colorPicker.rows === 0) ? rowsInt : (Math.floor(rowsInt) + 1),
-                    colorCounter = 0;
+                    colorCount = we.core.pallete.colorPicker.colors.length;
 
-                for(var i = 0; i < rowsCount; i++){
-                    var row = colorTable.insertRow(0);
-                    for(var j = 0; j < we.core.pallete.colorPicker.rows; j++){
-                        var cell = row.insertCell(0);
-                        cell.className = 'we-color-picker-cell';
-                        cell.style.background = we.core.pallete.colorPicker.colors[colorCounter];
-                        cell.thisColor = we.core.pallete.colorPicker.colors[colorCounter];
-                        cell.onclick = function(){
-                            renderTo.linkToParent.style.background = this.thisColor;
+                for(var i = 0; i < colorCount; i++){
+                    var color = we.dom.create('li', {
+                        className: 'we-color-picker-cell',
+                        color: we.core.pallete.colorPicker.colors[i],
+                        onclick: function(){
+                            renderTo.linkToParent.style.background = this.color;
                             we.sheet.contextmenuClear();
-                        };
-                        colorCounter++;
-                    }
+                        },
+                        renderTo: colorTable
+                    });
+
+                    color.style.background = we.core.pallete.colorPicker.colors[i];
                 }
+            };
+
+            we.core.pallete.changeName = {};
+            we.core.pallete.changeName.create = function(renderTo, config) {
+                var changeName = we.dom.create('div', {
+                        className: 'we-change-name',
+                        renderTo: renderTo
+                    }),
+                    label = we.dom.create('span', {
+                        className: 'we-change-name-label',
+                        innerHTML: config.label,
+                        renderTo: changeName
+                    }),
+                    newName = we.dom.create('input', {
+                        type: 'text',
+                        className: 'we-change-name-field',
+                        renderTo: changeName
+                    }),
+                    changeButton = we.dom.create('input', {
+                        type: 'button',
+                        className: 'we-change-name-btn',
+                        value: 'Change',
+                        renderTo: changeName
+                    });
             };
 
             //********************************************************

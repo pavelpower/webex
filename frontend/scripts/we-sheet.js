@@ -99,7 +99,12 @@
                         contextmenu.style.left = e.x + 'px';
                         contextmenu.style.top = e.y - 150 + 'px';
 
-                        we.core.pallete.colorPicker.create(contextmenu);
+                        we.core.pallete.colorPicker.create(contextmenu, {
+                            label: 'Sheet label color:'
+                        });
+                        we.core.pallete.changeName.create(contextmenu, {
+                            label: 'Sheet name:'
+                        });
 
                         this.onContextMenu = true;
                         we.sheet.contextmenu = contextmenu;

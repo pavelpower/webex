@@ -205,7 +205,9 @@ body,
     margin: 10px;
 }
 
-.we-formbox-field-label{
+.we-formbox-field-label,
+.we-change-name-label,
+.we-color-picker-label{
     font-size: 12px;
     font-family: Arial;
 }
@@ -337,34 +339,58 @@ body,
 
 .we-sheet-label-contextmenu{
     display: inline-block;
-    height: 150px;
-    width: auto;
+    min-height: 150px;
+    height: auto;
+    width: 136px;
     background: #d7d7d7;
     border: 1px solid #777777;
 }
 
 .we-color-picker-cell{
+    display: inline-block;
     width: 20px;
     height: 20px;
+    margin: 1px;
 }
 
 .we-color-picker-cell:hover{
     cursor: pointer;
 }
 
-.we-color-picker-default-btn{
+.we-color-picker-default-btn,
+.we-change-name-btn{
     border-radius: 0;
     border: 1px solid #777777;
-    margin: 2px 2px;
-    width: calc(100% - 4px);
+    margin: 1px;
+    width: calc(100% - 2px);
 }
 
-.we-color-picker-default-btn:hover{
+.we-color-picker-default-btn:hover,
+.we-change-name-btn:hover{
     cursor: pointer;
     box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
 }
 
+.we-color-picker-tab{
+    width: 100%;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
 
+.we-color-picker,
+.we-change-name{
+    margin: 2px;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.we-change-name-field{
+    display: block;
+    margin: 0 1px 2px;
+    width: calc(100% - 2px);
+    box-sizing: border-box;
+}
 
 
 
