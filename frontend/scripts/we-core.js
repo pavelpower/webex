@@ -5,6 +5,8 @@
         if (document.readyState === 'complete') {
             clearInterval(timer);
 
+
+            //TODO: create backlog
             window.we = {};
 
             //********************************************************
