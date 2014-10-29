@@ -62,6 +62,23 @@
         }
     };
 
+    we.sheet.delete = function(sheet){
+        var len = we.sheet.items.length;
+
+        for(var i = 0; i < len; i++){
+            if(we.sheet.items[i].grid === sheet) {
+                we.sheet.items[i].grid.remove();
+                we.sheet.items[i].label.remove();
+                we.sheet.items[i].body.remove();
+
+                we.sheet.items = we.core.array.deleteItem(we.sheet.items, i);
+
+                we.sheet.contextmenuClear();
+                return;
+            }
+        }
+    };
+
     we.sheet.create = function(newSheet){
         we.sheet.count++;
         var addButton = we.dom.getElement('we-sheet-add-button'),
@@ -132,13 +149,14 @@
                                         },
                                         events: {
                                             accept: function(){
-
+                                                console.log('User accepted deletion!');
+                                                we.sheet.delete(grid);
                                             },
                                             decline: function(){
-
+                                                console.log('User declined deletion!');
                                             },
                                             cancel: function(){
-
+                                                console.log('User canceled deletion!');
                                             }
                                         }
                                     }

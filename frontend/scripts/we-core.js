@@ -57,6 +57,20 @@
                 return a < b ? a : b;
             };
 
+            we.core.array = {};
+            we.core.array.deleteItem = function(array, index){
+                var len = array.length,
+                    newArray = [];
+
+                for(var i = 0; i < len; i++){
+                    if(i !== index) {
+                        newArray.push(array[i])
+                    }
+                }
+
+                return newArray;
+            };
+
             we.core.msg = {};
             we.core.msg.messageCount = 0;
             we.core.msg.messageBox = function(params){
