@@ -15,8 +15,11 @@
 
     we.sheet.contextmenu = null;
     we.sheet.contextmenuClear = function(){
-        we.sheet.contextmenu.linkToParent.onContextMenu = false;
-        we.sheet.contextmenu.remove();
+        if(we.sheet.contextmenu){
+            we.sheet.contextmenu.linkToParent.onContextMenu = false;
+            we.sheet.contextmenu.remove();
+            we.sheet.contextmenu = null;
+        }
     };
 
     we.sheet.selection = [];
