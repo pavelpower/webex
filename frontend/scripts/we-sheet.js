@@ -137,6 +137,8 @@
         we.dom.addClass(nextElem, 'we-cell-input-active');
 
         we.sheet.selection.push(nextElem);
+
+        we.cell.setSheetMenu(nextElem.customStyle);
     };
 
     we.sheet.downArrowDown = function(){
@@ -171,6 +173,8 @@
         we.dom.addClass(nextElem, 'we-cell-input-active');
 
         we.sheet.selection.push(nextElem);
+
+        we.cell.setSheetMenu(nextElem.customStyle);
     };
 
     we.sheet.leftArrowDown = function() {
@@ -205,6 +209,8 @@
         we.dom.addClass(nextElem, 'we-cell-input-active');
 
         we.sheet.selection.push(nextElem);
+
+        we.cell.setSheetMenu(nextElem.customStyle);
     };
 
     we.sheet.rightArrowDown = function(){
@@ -239,6 +245,8 @@
         we.dom.addClass(nextElem, 'we-cell-input-active');
 
         we.sheet.selection.push(nextElem);
+
+        we.cell.setSheetMenu(nextElem.customStyle);
     };
 
     we.sheet.create = function(newSheet){
@@ -342,18 +350,18 @@
                     if (e.keyCode === 46){
                         console.log('Hello!');
                         we.sheet.selectionClean();
-                    } else {
+                    } else if(e.keyCode === 38){
                         e.preventDefault();
-
-                        if(e.keyCode === 38){
-                            we.sheet.upArrowDown();
-                        } else if(e.keyCode === 40){
-                            we.sheet.downArrowDown();
-                        } else if(e.keyCode === 39){
-                            we.sheet.leftArrowDown();
-                        } else if(e.keyCode === 37){
-                            we.sheet.rightArrowDown();
-                        }
+                        we.sheet.upArrowDown();
+                    } else if(e.keyCode === 40){
+                        e.preventDefault();
+                        we.sheet.downArrowDown();
+                    } else if(e.keyCode === 39){
+                        e.preventDefault();
+                        we.sheet.leftArrowDown();
+                    } else if(e.keyCode === 37){
+                        e.preventDefault();
+                        we.sheet.rightArrowDown();
                     }
                 },
                 rowArr: [],
