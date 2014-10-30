@@ -74,8 +74,13 @@
         }
     };
 
+    //TODO: change text align property
     we.doc.sheetMenu.textAlignLeft = we.dom.getElement('we-settingsMenu__textAlignLeft');
+
+    //TODO: change text align property
     we.doc.sheetMenu.textAlignCenter = we.dom.getElement('we-settingsMenu__textAlignCenter');
+
+    //TODO: change text align property
     we.doc.sheetMenu.textAlignRight = we.dom.getElement('we-settingsMenu__textAlignRight');
 
     we.doc.sheetMenu.borderThick = we.dom.getElement('we-settingsMenu__borderThick');
