@@ -64,7 +64,11 @@
         we.doc.sheetMenu.textColor.value = params.textColor;
 
         //set the underline property of the text
-        if (params.isUnderlined) we.dom.addClass(we.doc.sheetMenu.isUnderline, 'we-settingsMenu__underline-active');
+        if (params.isUnderlined) {
+            we.dom.addClass(we.doc.sheetMenu.isUnderline, 'we-settingsMenu__underline-active');
+        } else {
+            we.dom.removeClass(we.doc.sheetMenu.isUnderline, 'we-settingsMenu__underline-active');
+        }
 
         //set the italic property of the text
         if (params.isItalic) we.dom.addClass(we.doc.sheetMenu.isItalic, 'we-settingsMenu__italic-active');

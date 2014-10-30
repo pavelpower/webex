@@ -595,6 +595,18 @@
 
                 e.className = newArr.join(' ');
             };
+            we.dom.hasClass = function(e, className) {
+                var classList = e.className,
+                    classArr = classList.split(' '),
+                    len = classArr.length,
+                    result = false;
+
+                for(var i = 0; i < len; i++){
+                    if(classArr[i] === className) return true;
+                }
+
+                return result;
+            };
 
             //********************************************************
 

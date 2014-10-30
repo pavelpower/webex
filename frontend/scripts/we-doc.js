@@ -29,7 +29,30 @@
     };
 
     we.doc.sheetMenu.isUnderline = we.dom.getElement('we-settingsMenu__underline');
+    we.doc.sheetMenu.isUnderline.onclick = function(){
+        var isUnderline = false,
+            textDecor = 'none',
+            selected = we.sheet.selection,
+            len = selected.length;
+
+        if(we.dom.hasClass(this, 'we-settingsMenu__underline-active')) {
+            we.dom.removeClass(this, 'we-settingsMenu__underline-active');
+            isUnderline = false;
+            textDecor = 'none';
+        } else {
+            we.dom.addClass(this, 'we-settingsMenu__underline-active');
+            isUnderline = true;
+            textDecor = 'underline';
+        }
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.isUnderlined = isUnderline;
+            selected[i].style.textDecoration = textDecor;
+        }
+    };
+
     we.doc.sheetMenu.isItalic = we.dom.getElement('we-settingsMenu__italic');
+
     we.doc.sheetMenu.textAlignLeft = we.dom.getElement('we-settingsMenu__textAlignLeft');
     we.doc.sheetMenu.textAlignCenter = we.dom.getElement('we-settingsMenu__textAlignCenter');
     we.doc.sheetMenu.textAlignRight = we.dom.getElement('we-settingsMenu__textAlignRight');
