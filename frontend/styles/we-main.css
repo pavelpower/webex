@@ -424,6 +424,94 @@ body,
     background: #d7d7d7;
 }
 
+.we-settingsMenu__bold,
+.we-settingsMenu__color,
+.we-settingsMenu__textAlign,
+.we-settingsMenu__borderThick,
+.we-settingsMenu__borderColor,
+.we-settingsMenu__borderType,
+.we-settingsMenu__backgroundColor{
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    height: 30px;
+}
+
+.we-settingsMenu__bold-title,
+.we-settingsMenu__color-title,
+.we-settingsMenu__textAlign-title,
+.we-settingsMenu__borderThick-title,
+.we-settingsMenu__borderColor-title,
+.we-settingsMenu__borderType-title,
+.we-settingsMenu__backgroundColor-title{
+    vertical-align: top;
+    height: 30px;
+    line-height: 30px;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.we-settingsMenu__bold-select,
+.we-settingsMenu__color-select,
+.we-settingsMenu__borderThick-select,
+.we-settingsMenu__borderColor-select,
+.we-settingsMenu__borderType-select,
+.we-settingsMenu__backgroundColor-select{
+    vertical-align: top;
+    margin: 5px;
+    height: 20px;
+    box-sizing: border-box;
+}
+
+.we-settingsMenu__underline,
+.we-settingsMenu__italic,
+.we-settingsMenu__textAlign-left,
+.we-settingsMenu__textAlign-center,
+.we-settingsMenu__textAlign-right{
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    margin: 2px 5px 2px 0;
+}
+
+.we-settingsMenu__underline:hover,
+.we-settingsMenu__italic:hover,
+.we-settingsMenu__textAlign-left:hover,
+.we-settingsMenu__textAlign-center:hover,
+.we-settingsMenu__textAlign-right:hover{
+    cursor: pointer;
+    background-color: #777777;
+}
+
+.we-settingsMenu__underline{
+    background: url('../images/sheet-menu/underline-icon.png');
+}
+
+.we-settingsMenu__italic{
+    background: url('../images/sheet-menu/italic-icon.png');
+}
+
+.we-settingsMenu__textAlign-left{
+    background: url('../images/sheet-menu/text-align-left.png');
+}
+
+.we-settingsMenu__textAlign-center{
+    background: url('../images/sheet-menu/text-align-center.png');
+}
+
+.we-settingsMenu__textAlign-right{
+    background: url('../images/sheet-menu/text-align-right.png');
+}
+
+
+
+
+
+
+
+
+
 
 
 
