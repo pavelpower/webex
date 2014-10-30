@@ -71,7 +71,11 @@
         }
 
         //set the italic property of the text
-        if (params.isItalic) we.dom.addClass(we.doc.sheetMenu.isItalic, 'we-settingsMenu__italic-active');
+        if (params.isItalic) {
+            we.dom.addClass(we.doc.sheetMenu.isItalic, 'we-settingsMenu__italic-active');
+        } else {
+            we.dom.removeClass(we.doc.sheetMenu.isItalic, 'we-settingsMenu__italic-active');
+        }
 
         //set text align parameter
         if(params.textAlign === 'left'){

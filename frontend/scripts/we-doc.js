@@ -52,14 +52,81 @@
     };
 
     we.doc.sheetMenu.isItalic = we.dom.getElement('we-settingsMenu__italic');
+    we.doc.sheetMenu.isItalic.onclick = function(){
+        var isItalic = false,
+            textStyle = 'normal',
+            selected = we.sheet.selection,
+            len = selected.length;
+
+        if(we.dom.hasClass(this, 'we-settingsMenu__italic-active')) {
+            we.dom.removeClass(this, 'we-settingsMenu__italic-active');
+            isItalic = false;
+            textStyle = 'normal';
+        } else {
+            we.dom.addClass(this, 'we-settingsMenu__italic-active');
+            isItalic = true;
+            textStyle = 'italic';
+        }
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.isItalic = isItalic;
+            selected[i].style.fontStyle = textStyle;
+        }
+    };
 
     we.doc.sheetMenu.textAlignLeft = we.dom.getElement('we-settingsMenu__textAlignLeft');
     we.doc.sheetMenu.textAlignCenter = we.dom.getElement('we-settingsMenu__textAlignCenter');
     we.doc.sheetMenu.textAlignRight = we.dom.getElement('we-settingsMenu__textAlignRight');
+
     we.doc.sheetMenu.borderThick = we.dom.getElement('we-settingsMenu__borderThick');
+    we.doc.sheetMenu.borderThick.oninput = function(){
+        var selected = we.sheet.selection,
+            len = selected.length,
+            border = 'none';
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.borderThick = this.value;
+            border = this.value + 'px ' + selected[i].customStyle.borderType + ' ' + selected[i].customStyle.borderColor;
+            selected[i].style.border = border;
+        }
+    };
+
     we.doc.sheetMenu.borderColor = we.dom.getElement('we-settingsMenu__borderColor');
+    we.doc.sheetMenu.borderColor.oninput = function(){
+        var selected = we.sheet.selection,
+            len = selected.length,
+            border = 'none';
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.borderColor = this.value;
+            border = selected[i].customStyle.borderThick + 'px ' + selected[i].customStyle.borderType + ' ' + this.value
+            selected[i].style.border = border;
+        }
+    };
+
     we.doc.sheetMenu.borderType = we.dom.getElement('we-settingsMenu__borderType');
+    we.doc.sheetMenu.borderType.onchange = function(){
+        var selected = we.sheet.selection,
+            len = selected.length,
+            border = 'none';
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.borderType = this.value;
+            border = selected[i].customStyle.borderThick + 'px ' + this.value + ' ' + selected[i].customStyle.borderColor;
+            selected[i].style.border = border;
+        }
+    };
+
     we.doc.sheetMenu.backgroundColor = we.dom.getElement('we-settingsMenu__backgroundColor');
+    we.doc.sheetMenu.backgroundColor.oninput = function(){
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.backgroundColor = this.value;
+            selected[i].style.backgroundColor = this.value;
+        }
+    };
 
     we.doc.fields = {};
     we.doc.fields.items = [];
