@@ -5,9 +5,38 @@
     we.doc.isSaved = false;
 
     we.doc.sheetMenu = {};
+
     we.doc.sheetMenu.textWeight = we.dom.getElement('we-settingsMenu__bold-select');
+    we.doc.sheetMenu.textWeight.onchange = function(){
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.textWeight = this.value;
+            selected[i].style.fontWeight = this.value;
+        }
+    };
+
     we.doc.sheetMenu.textColor = we.dom.getElement('we-settingsMenu__color-select');
+    we.doc.sheetMenu.textColor.oninput = function(){
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.textColor = this.value;
+            selected[i].style.color = this.value;
+        }
+    };
+
     we.doc.sheetMenu.isUnderline = we.dom.getElement('we-settingsMenu__underline');
+    we.doc.sheetMenu.isItalic = we.dom.getElement('we-settingsMenu__italic');
+    we.doc.sheetMenu.textAlignLeft = we.dom.getElement('we-settingsMenu__textAlignLeft');
+    we.doc.sheetMenu.textAlignCenter = we.dom.getElement('we-settingsMenu__textAlignCenter');
+    we.doc.sheetMenu.textAlignRight = we.dom.getElement('we-settingsMenu__textAlignRight');
+    we.doc.sheetMenu.borderThick = we.dom.getElement('we-settingsMenu__borderThick');
+    we.doc.sheetMenu.borderColor = we.dom.getElement('we-settingsMenu__borderColor');
+    we.doc.sheetMenu.borderType = we.dom.getElement('we-settingsMenu__borderType');
+    we.doc.sheetMenu.backgroundColor = we.dom.getElement('we-settingsMenu__backgroundColor');
 
     we.doc.fields = {};
     we.doc.fields.items = [];

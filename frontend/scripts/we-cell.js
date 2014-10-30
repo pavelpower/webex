@@ -65,6 +65,36 @@
 
         //set the underline property of the text
         if (params.isUnderlined) we.dom.addClass(we.doc.sheetMenu.isUnderline, 'we-settingsMenu__underline-active');
+
+        //set the italic property of the text
+        if (params.isItalic) we.dom.addClass(we.doc.sheetMenu.isItalic, 'we-settingsMenu__italic-active');
+
+        //set text align parameter
+        if(params.textAlign === 'left'){
+            we.dom.addClass(we.doc.sheetMenu.textAlignLeft, 'we-settingsMenu__textAlign-left-active');
+        } else if(params.textAlign === 'center') {
+            we.dom.addClass(we.doc.sheetMenu.textAlignCenter, 'we-settingsMenu__textAlign-center-active');
+        } else if(params.textAlign === 'right') {
+            we.dom.addClass(we.doc.sheetMenu.textAlignRight, 'we-settingsMenu__textAlign-right-active');
+        }
+
+        //set the border thick parameter
+        we.doc.sheetMenu.borderThick.value = params.borderThick;
+
+        //set the border color
+        we.doc.sheetMenu.borderColor.value = params.borderColor;
+
+        options = we.doc.sheetMenu.borderType.options;
+        optLen = options.length;
+
+        for(var i = 0; i < optLen; i++){
+            if(options[i].value === params.borderType) {
+                options[i].selected = true;
+            };
+        }
+
+        //set the background color parameter
+        we.doc.sheetMenu.backgroundColor.value = params.backgroundColor;
     };
 
     we.cell.insertTo = function(grid, row, config) {
@@ -139,15 +169,18 @@
                     className: 'we-cell-input',
                     grid: grid,
                     customStyle: {
-                        textWeight: '700',
-                        textColor: '#FF0000',
+                        textWeight: '400',
+                        textColor: '#000000',
                         textAlign: 'left',
-                        isUnderlined: true,
+                        isUnderlined: false,
                         isItalic: false,
                         borderThick: 0,
                         borderColor: '#000000',
                         borderType: 'solid',
                         backgroundColor: '#FFFFFF'
+                    },
+                    setCustomStyle: function(){
+
                     },
                     onmousedown: function() {
                         we.sheet.selectionClear();

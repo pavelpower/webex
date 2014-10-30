@@ -488,6 +488,16 @@ body,
     background-color: #777777 !important;
 }
 
+.we-settingsMenu__italic-active{
+    background-color: #777777 !important;
+}
+
+.we-settingsMenu__textAlign-left-active,
+.we-settingsMenu__textAlign-center-active,
+.we-settingsMenu__textAlign-right-active{
+    background-color: #777777 !important;
+}
+
 .we-settingsMenu__underline{
     background: url('../images/sheet-menu/underline-icon.png');
 }
