@@ -74,7 +74,6 @@
         }
     };
 
-    //TODO: change text align property
     we.doc.sheetMenu.textAlignLeft = we.dom.getElement('we-settingsMenu__textAlignLeft');
     we.doc.sheetMenu.textAlignLeft.onclick = function(){
         we.doc.sheetMenu.textAlignClear();
@@ -89,7 +88,6 @@
         }
     };
 
-    //TODO: change text align property
     we.doc.sheetMenu.textAlignCenter = we.dom.getElement('we-settingsMenu__textAlignCenter');
     we.doc.sheetMenu.textAlignCenter.onclick = function(){
         we.doc.sheetMenu.textAlignClear();
@@ -104,7 +102,6 @@
         }
     };
 
-    //TODO: change text align property
     we.doc.sheetMenu.textAlignRight = we.dom.getElement('we-settingsMenu__textAlignRight');
     we.doc.sheetMenu.textAlignRight.onclick = function(){
         we.doc.sheetMenu.textAlignClear();

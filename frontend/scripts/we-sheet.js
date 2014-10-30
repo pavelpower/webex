@@ -79,6 +79,168 @@
         }
     };
 
+    we.sheet.getTopRightNextSelectedCell = function(){
+        var selected = we.sheet.selection,
+            len = selected.length,
+            minRow = we.rows.count,
+            maxCol = 0,
+            tmpRow = null,
+            tmpCol = null,
+            sheet = null,
+            parseArr = [],
+            nextId = 'we-input-',
+            nextElem = null;
+
+        for(var i = 0; i < len; i++){
+            parseArr = selected[i].id.split('-').reverse();
+            tmpRow = parseArr[1];
+            tmpCol = parseArr[0];
+            sheet = parseArr[2];
+
+            if(tmpRow < minRow) minRow = tmpRow;
+
+            if(tmpCol > maxCol) maxCol = tmpCol;
+        }
+
+        nextId += sheet + '-' + ((minRow > 1 ? minRow - 1 : minRow)) + '-' + (maxCol);
+        nextElem = we.dom.getElement(nextId);
+    };
+
+    we.sheet.upArrowDown = function(){
+        var selected = we.sheet.selection,
+            len = selected.length,
+            minRow = we.rows.count,
+            maxCol = 0,
+            tmpRow = null,
+            tmpCol = null,
+            sheet = null,
+            parseArr = [],
+            nextId = 'we-input-',
+            nextElem = null;
+
+        for(var i = 0; i < len; i++){
+            parseArr = selected[i].id.split('-').reverse();
+            tmpRow = +parseArr[1];
+            tmpCol = +parseArr[0];
+            sheet = +parseArr[2];
+
+            if(tmpRow < minRow) minRow = tmpRow;
+
+            if(tmpCol > maxCol) maxCol = tmpCol;
+        }
+
+        nextId += sheet + '-' + ((minRow > 1 ? minRow - 1 : minRow)) + '-' + (maxCol);
+        nextElem = we.dom.getElement(nextId);
+
+        we.sheet.selectionClear();
+
+        we.dom.addClass(nextElem, 'we-cell-input-active');
+
+        we.sheet.selection.push(nextElem);
+    };
+
+    we.sheet.downArrowDown = function(){
+        var selected = we.sheet.selection,
+            len = selected.length,
+            minRow = we.rows.count,
+            maxCol = 0,
+            tmpRow = null,
+            tmpCol = null,
+            sheet = null,
+            parseArr = [],
+            nextId = 'we-input-',
+            nextElem = null;
+
+        for(var i = 0; i < len; i++){
+            parseArr = selected[i].id.split('-').reverse();
+            tmpRow = +parseArr[1];
+            tmpCol = +parseArr[0];
+            sheet = +parseArr[2];
+
+            if(tmpRow < minRow) minRow = tmpRow;
+
+            if(tmpCol > maxCol) maxCol = tmpCol;
+        }
+
+        nextId += sheet + '-' + ((minRow >= we.rows.count - 1 ? minRow : +minRow + 1)) + '-' + (maxCol);
+
+        nextElem = we.dom.getElement(nextId);
+
+        we.sheet.selectionClear();
+
+        we.dom.addClass(nextElem, 'we-cell-input-active');
+
+        we.sheet.selection.push(nextElem);
+    };
+
+    we.sheet.leftArrowDown = function() {
+        var selected = we.sheet.selection,
+            len = selected.length,
+            minRow = we.rows.count,
+            maxCol = 0,
+            tmpRow = null,
+            tmpCol = null,
+            sheet = null,
+            parseArr = [],
+            nextId = 'we-input-',
+            nextElem = null;
+
+        for(var i = 0; i < len; i++){
+            parseArr = selected[i].id.split('-').reverse();
+            tmpRow = +parseArr[1];
+            tmpCol = +parseArr[0];
+            sheet = +parseArr[2];
+
+            if(tmpRow < minRow) minRow = tmpRow;
+
+            if(tmpCol > maxCol) maxCol = tmpCol;
+        }
+
+        nextId += sheet + '-' + (minRow) + '-' + (maxCol >= we.cols.count - 1 ? maxCol : +maxCol + 1);
+
+        nextElem = we.dom.getElement(nextId);
+
+        we.sheet.selectionClear();
+
+        we.dom.addClass(nextElem, 'we-cell-input-active');
+
+        we.sheet.selection.push(nextElem);
+    };
+
+    we.sheet.rightArrowDown = function(){
+        var selected = we.sheet.selection,
+            len = selected.length,
+            minRow = we.rows.count,
+            maxCol = 0,
+            tmpRow = null,
+            tmpCol = null,
+            sheet = null,
+            parseArr = [],
+            nextId = 'we-input-',
+            nextElem = null;
+
+        for(var i = 0; i < len; i++){
+            parseArr = selected[i].id.split('-').reverse();
+            tmpRow = +parseArr[1];
+            tmpCol = +parseArr[0];
+            sheet = +parseArr[2];
+
+            if(tmpRow < minRow) minRow = tmpRow;
+
+            if(tmpCol > maxCol) maxCol = tmpCol;
+        }
+
+        nextId += sheet + '-' + (minRow) + '-' + (maxCol > 1 ? +maxCol - 1 : maxCol);
+
+        nextElem = we.dom.getElement(nextId);
+
+        we.sheet.selectionClear();
+
+        we.dom.addClass(nextElem, 'we-cell-input-active');
+
+        we.sheet.selection.push(nextElem);
+    };
+
     we.sheet.create = function(newSheet){
         we.sheet.count++;
         var addButton = we.dom.getElement('we-sheet-add-button'),
@@ -180,6 +342,18 @@
                     if (e.keyCode === 46){
                         console.log('Hello!');
                         we.sheet.selectionClean();
+                    } else {
+                        e.preventDefault();
+
+                        if(e.keyCode === 38){
+                            we.sheet.upArrowDown();
+                        } else if(e.keyCode === 40){
+                            we.sheet.downArrowDown();
+                        } else if(e.keyCode === 39){
+                            we.sheet.leftArrowDown();
+                        } else if(e.keyCode === 37){
+                            we.sheet.rightArrowDown();
+                        }
                     }
                 },
                 rowArr: [],
