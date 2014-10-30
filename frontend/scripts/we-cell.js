@@ -78,12 +78,13 @@
         }
 
         //set text align parameter
+        we.doc.sheetMenu.textAlignClear();
         if(params.textAlign === 'left'){
-            we.dom.addClass(we.doc.sheetMenu.textAlignLeft, 'we-settingsMenu__textAlign-left-active');
+            we.dom.addClass(we.doc.sheetMenu.textAlignLeft, 'we-settingsMenu__textAlign-active');
         } else if(params.textAlign === 'center') {
-            we.dom.addClass(we.doc.sheetMenu.textAlignCenter, 'we-settingsMenu__textAlign-center-active');
+            we.dom.addClass(we.doc.sheetMenu.textAlignCenter, 'we-settingsMenu__textAlign-active');
         } else if(params.textAlign === 'right') {
-            we.dom.addClass(we.doc.sheetMenu.textAlignRight, 'we-settingsMenu__textAlign-right-active');
+            we.dom.addClass(we.doc.sheetMenu.textAlignRight, 'we-settingsMenu__textAlign-active');
         }
 
         //set the border thick parameter

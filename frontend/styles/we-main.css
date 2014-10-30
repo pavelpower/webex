@@ -492,9 +492,7 @@ body,
     background-color: #777777 !important;
 }
 
-.we-settingsMenu__textAlign-left-active,
-.we-settingsMenu__textAlign-center-active,
-.we-settingsMenu__textAlign-right-active{
+.we-settingsMenu__textAlign-active{
     background-color: #777777 !important;
 }
 

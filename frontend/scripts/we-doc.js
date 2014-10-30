@@ -76,12 +76,54 @@
 
     //TODO: change text align property
     we.doc.sheetMenu.textAlignLeft = we.dom.getElement('we-settingsMenu__textAlignLeft');
+    we.doc.sheetMenu.textAlignLeft.onclick = function(){
+        we.doc.sheetMenu.textAlignClear();
+        we.dom.addClass(this, 'we-settingsMenu__textAlign-active');
+
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.textAlign = 'left';
+            selected[i].style.textAlign = 'left';
+        }
+    };
 
     //TODO: change text align property
     we.doc.sheetMenu.textAlignCenter = we.dom.getElement('we-settingsMenu__textAlignCenter');
+    we.doc.sheetMenu.textAlignCenter.onclick = function(){
+        we.doc.sheetMenu.textAlignClear();
+        we.dom.addClass(this, 'we-settingsMenu__textAlign-active');
+
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.textAlign = 'center';
+            selected[i].style.textAlign = 'center';
+        }
+    };
 
     //TODO: change text align property
     we.doc.sheetMenu.textAlignRight = we.dom.getElement('we-settingsMenu__textAlignRight');
+    we.doc.sheetMenu.textAlignRight.onclick = function(){
+        we.doc.sheetMenu.textAlignClear();
+        we.dom.addClass(this, 'we-settingsMenu__textAlign-active');
+
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.textAlign = 'right';
+            selected[i].style.textAlign = 'right';
+        }
+    };
+
+    we.doc.sheetMenu.textAlignClear = function(){
+        we.dom.removeClass(we.doc.sheetMenu.textAlignLeft, 'we-settingsMenu__textAlign-active');
+        we.dom.removeClass(we.doc.sheetMenu.textAlignCenter, 'we-settingsMenu__textAlign-active');
+        we.dom.removeClass(we.doc.sheetMenu.textAlignRight, 'we-settingsMenu__textAlign-active');
+    };
 
     we.doc.sheetMenu.borderThick = we.dom.getElement('we-settingsMenu__borderThick');
     we.doc.sheetMenu.borderThick.oninput = function(){
