@@ -4,6 +4,11 @@
     we.doc.isOpened = false;
     we.doc.isSaved = false;
 
+    we.doc.sheetMenu = {};
+    we.doc.sheetMenu.textWeight = we.dom.getElement('we-settingsMenu__bold-select');
+    we.doc.sheetMenu.textColor = we.dom.getElement('we-settingsMenu__color-select');
+    we.doc.sheetMenu.isUnderline = we.dom.getElement('we-settingsMenu__underline');
+
     we.doc.fields = {};
     we.doc.fields.items = [];
     we.doc.fields.enable = function() {

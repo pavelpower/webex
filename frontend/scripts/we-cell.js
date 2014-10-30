@@ -49,6 +49,24 @@
         }
     };
 
+    we.cell.setSheetMenu = function(params) {
+        //set the text weight
+        var options = we.doc.sheetMenu.textWeight.options,
+            optLen = options.length;
+
+        for(var i = 0; i < optLen; i++){
+            if(options[i].value === params.textWeight) {
+                options[i].selected = true;
+            };
+        }
+
+        //set the text color
+        we.doc.sheetMenu.textColor.value = params.textColor;
+
+        //set the underline property of the text
+        if (params.isUnderlined) we.dom.addClass(we.doc.sheetMenu.isUnderline, 'we-settingsMenu__underline-active');
+    };
+
     we.cell.insertTo = function(grid, row, config) {
         var cell = we.dom.create('td', {
                 id: config.id,
@@ -120,8 +138,16 @@
                     type: 'text',
                     className: 'we-cell-input',
                     grid: grid,
-                    onclick: function(){
-
+                    customStyle: {
+                        textWeight: '700',
+                        textColor: '#FF0000',
+                        textAlign: 'left',
+                        isUnderlined: true,
+                        isItalic: false,
+                        borderThick: 0,
+                        borderColor: '#000000',
+                        borderType: 'solid',
+                        backgroundColor: '#FFFFFF'
                     },
                     onmousedown: function() {
                         we.sheet.selectionClear();
@@ -131,6 +157,8 @@
 
                         we.sheet.selectionStart = this;
                         we.cell.onSelection = true;
+
+                        we.cell.setSheetMenu(this.customStyle);
                     },
                     onmouseup: function() {
                         we.cell.onSelection = false;

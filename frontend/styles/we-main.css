@@ -484,6 +484,10 @@ body,
     background-color: #777777;
 }
 
+.we-settingsMenu__underline-active{
+    background-color: #777777 !important;
+}
+
 .we-settingsMenu__underline{
     background: url('../images/sheet-menu/underline-icon.png');
 }
