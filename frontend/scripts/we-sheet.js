@@ -249,6 +249,15 @@
         we.cell.setSheetMenu(nextElem.customStyle);
     };
 
+    we.sheet.focusOn = function(){
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        we.doc.expressionField.value = '';
+        we.sheet.selectionClean();
+        we.doc.expressionField.focus();
+    };
+
     we.sheet.create = function(newSheet){
         we.sheet.count++;
         var addButton = we.dom.getElement('we-sheet-add-button'),
@@ -348,7 +357,6 @@
                 className: 'we-grid-sheet-body-grid',
                 onkeydown: function(e){
                     if (e.keyCode === 46){
-                        console.log('Hello!');
                         we.sheet.selectionClean();
                     } else if(e.keyCode === 38){
                         e.preventDefault();
@@ -362,6 +370,8 @@
                     } else if(e.keyCode === 37){
                         e.preventDefault();
                         we.sheet.rightArrowDown();
+                    } else if (e.keyCode === 187){
+                        we.sheet.focusOn();
                     }
                 },
                 rowArr: [],

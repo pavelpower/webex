@@ -183,6 +183,29 @@
         }
     };
 
+    we.doc.expressionField = we.dom.getElement('we-formula-fld');
+    we.doc.expressionField.oninput = function(){
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        if(len){
+            for(var i = 0; i < len; i++){
+                selected[i].value = this.value;
+            }
+        } else{
+            we.core.msg.messageBox({
+                title: 'Warning!',
+                text: 'There are no cells selected cells. This expression will not apply for anyone cells.'
+            });
+        }
+    };
+    we.doc.expressionField.onkeydown = function(e) {
+        if(e.keyCode === 13) {
+            we.sheet.downArrowDown();
+            this.blur();
+        }
+    };
+
     we.doc.sheetMenu.clearStyles = we.dom.getElement('we-settings__clearStyles-btn');
     we.doc.sheetMenu.clearStyles.onclick = function(){
         if(!we.doc.isOpened){
