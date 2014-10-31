@@ -128,6 +128,16 @@
 
     };
 
+    we.cell.applyCustomStyles = function(cell){
+        cell.style.fontWeight = cell.customStyle.textWeight;
+        cell.style.color = cell.customStyle.textColor;
+        cell.style.textDecoration = cell.customStyle.isUnderlined ? 'underline' : 'none';
+        cell.style.fontStyle = cell.customStyle.isItalic ? 'italic' : 'normal';
+        cell.style.textAlign = cell.customStyle.textAlign;
+        cell.style.border = cell.customStyle.borderThick + 'px ' + cell.customStyle.borderType + ' ' + cell.customStyle.borderColor;
+        cell.style.backgroundColor = cell.customStyle.backgroundColor;
+    };
+
     we.cell.insertTo = function(grid, row, config) {
         var cell = we.dom.create('td', {
                 id: config.id,
@@ -208,9 +218,6 @@
                         borderColor: '#000000',
                         borderType: 'solid',
                         backgroundColor: '#FFFFFF'
-                    },
-                    setCustomStyle: function(){
-
                     },
                     onmousedown: function() {
                         we.sheet.selectionClear();

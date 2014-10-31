@@ -186,9 +186,9 @@
             if(len){
                 for(var i = 0; i < len; i++){
                     we.core.extend(we.cell.defaultStyle, selected[i].customStyle);
+                    selected[i].removeAttribute('style');
+                    we.cell.setSheetMenu(selected[i].customStyle);
                 }
-
-                we.cell.setSheetMenu(we.cell.defaultStyle);
             } else{
                 we.core.msg.messageBox({
                     title: 'Warning!',
