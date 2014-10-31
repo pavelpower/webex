@@ -269,6 +269,8 @@ body,
     box-sizing: border-box;
     border: none;
     border-radius: 0;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 .we-cell-input:hover{
@@ -331,7 +333,7 @@ body,
 
 .we-rangeField{
     height: 24px;
-    width: 100px;
+    width: 120px;
     margin: 3px 5px 3px 0;
     box-sizing: border-box;
     border: 1px solid #777777;
@@ -431,11 +433,13 @@ body,
 .we-settingsMenu__borderColor,
 .we-settingsMenu__borderType,
 .we-settingsMenu__backgroundColor,
-.we-settingsMenu__clearStyles{
+.we-settingsMenu__clearStyles,
+.we-settingsMenu__textSize{
     display: inline-block;
     vertical-align: top;
     width: auto;
     height: 30px;
+    margin: 0 5px;
 }
 
 .we-settingsMenu__bold-title,
@@ -444,7 +448,8 @@ body,
 .we-settingsMenu__borderThick-title,
 .we-settingsMenu__borderColor-title,
 .we-settingsMenu__borderType-title,
-.we-settingsMenu__backgroundColor-title{
+.we-settingsMenu__backgroundColor-title,
+.we-settingsMenu__textSize-title{
     vertical-align: top;
     height: 30px;
     line-height: 30px;
@@ -459,11 +464,28 @@ body,
 .we-settingsMenu__borderColor-select,
 .we-settingsMenu__borderType-select,
 .we-settingsMenu__backgroundColor-select,
+.we-settingsMenu__textSize-field{
+    vertical-align: top;
+    margin: 2px 5px;
+    height: 24px;
+    box-sizing: border-box;
+}
+
+.we-settingsMenu__textSize-field{
+    width: 50px;
+}
+
 .we-settings__clearStyles-btn{
     vertical-align: top;
-    margin: 5px;
-    height: 20px;
     box-sizing: border-box;
+    margin: 2px 5px;
+    height: 24px;
+    width: 30px;
+    background: url('../images/sheet-menu/clear-styles.png') no-repeat center center;
+}
+
+.we-settings__clearStyles-btn:hover{
+    cursor: pointer;
 }
 
 .we-settingsMenu__underline,
@@ -471,10 +493,12 @@ body,
 .we-settingsMenu__textAlign-left,
 .we-settingsMenu__textAlign-center,
 .we-settingsMenu__textAlign-right{
+    vertical-align: top;
     display: inline-block;
     height: 24px;
-    width: 24px;
+    width: 30px;
     margin: 2px 5px 2px 0;
+    box-sizing: border-box;
 }
 
 .we-settingsMenu__underline:hover,
@@ -499,23 +523,23 @@ body,
 }
 
 .we-settingsMenu__underline{
-    background: url('../images/sheet-menu/underline-icon.png');
+    background: url('../images/sheet-menu/underline-icon.png') no-repeat center center;
 }
 
 .we-settingsMenu__italic{
-    background: url('../images/sheet-menu/italic-icon.png');
+    background: url('../images/sheet-menu/italic-icon.png') no-repeat center center;
 }
 
 .we-settingsMenu__textAlign-left{
-    background: url('../images/sheet-menu/text-align-left.png');
+    background: url('../images/sheet-menu/text-align-left.png') no-repeat center center;
 }
 
 .we-settingsMenu__textAlign-center{
-    background: url('../images/sheet-menu/text-align-center.png');
+    background: url('../images/sheet-menu/text-align-center.png') no-repeat center center;
 }
 
 .we-settingsMenu__textAlign-right{
-    background: url('../images/sheet-menu/text-align-right.png');
+    background: url('../images/sheet-menu/text-align-right.png') no-repeat center center;
 }
 
 

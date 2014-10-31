@@ -172,6 +172,17 @@
         }
     };
 
+    we.doc.sheetMenu.textSize = we.dom.getElement('we-settingsMenu__textSize-field');
+    we.doc.sheetMenu.textSize.oninput = function(){
+        var selected = we.sheet.selection,
+            len = selected.length;
+
+        for(var i = 0; i < len; i++){
+            selected[i].customStyle.textSize = this.value;
+            selected[i].style.fontSize = this.value + 'px';
+        }
+    };
+
     we.doc.sheetMenu.clearStyles = we.dom.getElement('we-settings__clearStyles-btn');
     we.doc.sheetMenu.clearStyles.onclick = function(){
         if(!we.doc.isOpened){

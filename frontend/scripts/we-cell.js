@@ -12,6 +12,7 @@
         textWeight: '400',
         textColor: '#000000',
         textAlign: 'left',
+        textSize: 12,
         isUnderlined: false,
         isItalic: false,
         borderThick: 0,
@@ -116,16 +117,15 @@
 
         //set the background color parameter
         we.doc.sheetMenu.backgroundColor.value = params.backgroundColor;
+
+        //set the text size property
+        we.doc.sheetMenu.textSize.value = params.textSize;
     };
 
     we.cell.readyToUse = function(cell){
         cell.readOnly = false;
         cell.focus();
         we.cell.setSheetMenu(cell.customStyle);
-    };
-
-    we.cell.customStyleClean = function(cell){
-
     };
 
     we.cell.applyCustomStyles = function(cell){
@@ -212,6 +212,7 @@
                         textWeight: '400',
                         textColor: '#000000',
                         textAlign: 'left',
+                        textSize: 12,
                         isUnderlined: false,
                         isItalic: false,
                         borderThick: 0,
@@ -219,6 +220,7 @@
                         borderType: 'solid',
                         backgroundColor: '#FFFFFF'
                     },
+                    expression: '',
                     onmousedown: function() {
                         we.sheet.selectionClear();
                         we.dom.addClass(this, 'we-cell-input-active');
@@ -272,6 +274,7 @@
                     },
                     oninput: function(){
                         we.doc.formulaField.value = this.value;
+
                     },
                     readOnly: true,
                     renderTo: cell
