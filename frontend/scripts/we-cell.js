@@ -8,6 +8,18 @@
     we.cell.onSelection = false;
     we.cell.onSelectionRow = false;
 
+    we.cell.defaultStyle = {
+        textWeight: '400',
+        textColor: '#000000',
+        textAlign: 'left',
+        isUnderlined: false,
+        isItalic: false,
+        borderThick: 0,
+        borderColor: '#000000',
+        borderType: 'solid',
+        backgroundColor: '#FFFFFF'
+    };
+
     we.cell.selectionChange = function(grid) {
         var startRow = we.sheet.selectionStart.id.split('-').reverse()[1],
             startCol = we.sheet.selectionStart.id.split('-').reverse()[0],
@@ -106,6 +118,16 @@
         we.doc.sheetMenu.backgroundColor.value = params.backgroundColor;
     };
 
+    we.cell.readyToUse = function(cell){
+        cell.readOnly = false;
+        cell.focus();
+        we.cell.setSheetMenu(cell.customStyle);
+    };
+
+    we.cell.customStyleClean = function(cell){
+
+    };
+
     we.cell.insertTo = function(grid, row, config) {
         var cell = we.dom.create('td', {
                 id: config.id,
@@ -151,7 +173,6 @@
 
             cell.onmouseover = function(){
                 if(we.cell.onSelectionRow) {
-                    console.log('Hello!');
                     we.sheet.selectionEnd = this;
                     we.cell.selectionChangeRow(grid);
                 }
@@ -210,6 +231,28 @@
                         if(we.cell.onSelection) {
                             we.sheet.selectionEnd = this;
                             we.cell.selectionChange(this.grid);
+                        }
+                    },
+
+                    onkeydown: function(e){
+                        if(e.keyCode === 13){
+                            var arr = this.id.split('-').reverse(),
+                                col = +arr[0],
+                                row = +arr[1],
+                                sheet = +arr[2],
+                                nextId = 'we-input-',
+                                nextElem = null;
+
+                            nextId += sheet + '-' + (row < we.rows.count - 1 ? row + 1 : row) + '-' + col;
+                            nextElem = we.dom.getElement(nextId);
+
+                            we.sheet.selectionClear();
+                            we.dom.addClass(nextElem, 'we-cell-input-active');
+                            we.sheet.selection.push(nextElem);
+
+                            we.cell.readyToUse(nextElem);
+
+                            e.preventDefault();
                         }
                     },
 

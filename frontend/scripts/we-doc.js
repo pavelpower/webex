@@ -172,6 +172,32 @@
         }
     };
 
+    we.doc.sheetMenu.clearStyles = we.dom.getElement('we-settings__clearStyles-btn');
+    we.doc.sheetMenu.clearStyles.onclick = function(){
+        if(!we.doc.isOpened){
+            we.core.msg.messageBox({
+                title: 'Warning!',
+                text: 'There is no opened document!'
+            });
+        } else {
+            var selected = we.sheet.selection,
+                len = selected.length;
+
+            if(len){
+                for(var i = 0; i < len; i++){
+                    we.core.extend(we.cell.defaultStyle, selected[i].customStyle);
+                }
+
+                we.cell.setSheetMenu(we.cell.defaultStyle);
+            } else{
+                we.core.msg.messageBox({
+                    title: 'Warning!',
+                    text: 'There are no selected cells!'
+                });
+            }
+        }
+    };
+
     we.doc.fields = {};
     we.doc.fields.items = [];
     we.doc.fields.enable = function() {

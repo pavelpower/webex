@@ -430,7 +430,8 @@ body,
 .we-settingsMenu__borderThick,
 .we-settingsMenu__borderColor,
 .we-settingsMenu__borderType,
-.we-settingsMenu__backgroundColor{
+.we-settingsMenu__backgroundColor,
+.we-settingsMenu__clearStyles{
     display: inline-block;
     vertical-align: top;
     width: auto;
@@ -457,7 +458,8 @@ body,
 .we-settingsMenu__borderThick-select,
 .we-settingsMenu__borderColor-select,
 .we-settingsMenu__borderType-select,
-.we-settingsMenu__backgroundColor-select{
+.we-settingsMenu__backgroundColor-select,
+.we-settings__clearStyles-btn{
     vertical-align: top;
     margin: 5px;
     height: 20px;
