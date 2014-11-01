@@ -8,7 +8,7 @@ body,
 }
 
 .we-container__header{
-    height: 100px;
+    height: auto;
     background: #c7c7c7;
 }
 
@@ -286,13 +286,14 @@ body,
 }
 
 .we-header__mainMenu{
-    height: 40px;
+    min-height: 40px;
     margin: 0 10px;
     font-size: 0;
 }
 
 .we-header__settingsMenu{
-    height: 30px;
+    min-height: 30px;
+    height: auto;
     margin: 0 10px;
     border-bottom: 1px dashed #777;
     border-top: 1px dashed #777;
