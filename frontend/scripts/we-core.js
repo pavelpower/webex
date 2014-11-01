@@ -424,6 +424,7 @@
                         color: we.core.pallete.colorPicker.colors[i],
                         onclick: function(){
                             this.parentSheet.style.background = this.color;
+                            we.doc.isSaved = false;
                             we.sheet.contextmenuClear();
                         },
                         renderTo: colorTable

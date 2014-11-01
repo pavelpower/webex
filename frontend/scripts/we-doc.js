@@ -26,7 +26,7 @@
 
         return result;
     };
-    we.doc.setDocumentStructure = function(){
+    we.doc.setStartDocumentStructure = function(){
         //name of the document
         we.doc.document.name = we.doc.name.value;
 
@@ -36,7 +36,44 @@
         //the date and time of the created
         we.doc.document.created = new Date();
 
+        //the document sheets collection
+        we.doc.document.sheets = [];
 
+        var items = we.sheet.items,
+            len = items.length;
+
+        for(var i = 0; i < len; i++){
+            var sheet = {};
+
+            sheet.name = items[i].label.innerHTML;
+            sheet.color = items[i].label.style.backgroundColor;
+
+            we.doc.document.sheets.push(sheet);
+        }
+    };
+
+    we.doc.setDocumentStructure = function(){
+        //name of the document
+        we.doc.document.name = we.doc.name.value;
+
+        //the date and time of the last modified
+        we.doc.document.modified = new Date();
+
+        //the document sheets collection
+        we.doc.document.sheets = [];
+
+        var items = we.sheet.items,
+            len = items.length;
+
+        we.doc.document.sheets = [];
+        for(var i = 0; i < len; i++){
+            var sheet = {};
+
+            sheet.name = items[i].label.innerHTML;
+            sheet.color = items[i].label.style.backgroundColor;
+
+            we.doc.document.sheets.push(sheet);
+        }
     };
 
     we.changeLog = [];
@@ -308,7 +345,7 @@
         we.doc.isOpened = true;
         we.doc.isSaved = true;
 
-        we.doc.setDocumentStructure();
+        we.doc.setStartDocumentStructure();
     };
 
     we.doc.createLayout = function() {
@@ -340,7 +377,8 @@
     };
 
     we.doc.save = function() {
-        console.log('Save document!');
+        we.doc.setDocumentStructure();
+        we.doc.isSaved = true;
     };
 
     we.doc.close = function() {

@@ -303,6 +303,7 @@
                                             accept: function(){
                                                 console.log('User accepted deletion!');
                                                 we.sheet.delete(grid);
+                                                we.doc.isSaved = false;
                                             },
                                             decline: function(){
                                                 console.log('User declined deletion!');
