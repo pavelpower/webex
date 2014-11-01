@@ -9,18 +9,34 @@
 
     we.doc.name = null;
 
+    we.doc.document = {};
     we.doc.checkDocumentName = function(){
         var xhr = new XMLHttpRequest(),
-            dataSend = JSON.stringify(we.doc.name);
+            dataSend = JSON.stringify(we.doc.name),
+            result = null;
 
         xhr.open('POST', '/checkname', false);
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.onreadystatechange = function(){
             if(xhr.readyState === 4 && xhr.status === 200){
-                console.log(xhr.response);
+                result = JSON.parse(xhr.response);
             }
         };
         xhr.send(dataSend);
+
+        return result;
+    };
+    we.doc.setDocumentStructure = function(){
+        //name of the document
+        we.doc.document.name = we.doc.name.value;
+
+        //the date and time of the last modified
+        we.doc.document.modified = new Date();
+
+        //the date and time of the created
+        we.doc.document.created = new Date();
+
+
     };
 
     we.changeLog = [];
@@ -291,6 +307,8 @@
 
         we.doc.isOpened = true;
         we.doc.isSaved = true;
+
+        we.doc.setDocumentStructure();
     };
 
     we.doc.createLayout = function() {

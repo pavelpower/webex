@@ -287,12 +287,21 @@
                         type: 'button',
                         value: 'Create',
                         onclick: function(){
+                            var checkResult = null;
                             readForm();
 
-                            we.doc.checkDocumentName();
-
                             we.core.msg.formFieldFinalize(this);
-                            callback(convertToObject(we.core.msg.formFieldParams));
+
+                            checkResult = we.doc.checkDocumentName();
+
+                            if(!checkResult.isExist){
+                                callback(convertToObject(we.core.msg.formFieldParams));
+                            } else {
+                                we.core.msg.messageBox({
+                                    title: 'Warning!',
+                                    text: checkResult.message
+                                });
+                            }
                         },
                         renderTo: formboxBoxButtonsBox
                     }),

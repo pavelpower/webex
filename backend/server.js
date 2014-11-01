@@ -1,16 +1,32 @@
 var express = require('express'),
     server = express(),
     location = "../frontend/",
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    mongojs = require('mongojs'),
+    db = mongojs('webex');
 
 server.use(express.static(location));
 server.use(bodyParser.json());
 
 server.post('/checkname', function(req, res) {
-    console.log('Get request from checkname!');
     console.log(req.body);
-    res.send({
-        'isExist': true
+
+    var collection = db.collection('docs'),
+        findObj = {
+            name: req.body.value
+        };
+
+    collection.find(findObj, function(err, docs) {
+        if(docs.length === 0){
+            res.send({
+                isExist: false
+            });
+        } else{
+            res.send({
+                isExist: true,
+                message: 'There is already existed file with the same name!'
+            });
+        }
     });
 });
 
