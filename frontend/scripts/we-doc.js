@@ -1,8 +1,29 @@
 (function(){
     we.doc = {};
+
     we.doc.docBody = we.dom.getElement('we-container__body');
+
     we.doc.isOpened = false;
     we.doc.isSaved = false;
+    we.doc.isChanged = false;
+
+    we.doc.name = null;
+
+    we.doc.checkDocumentName = function(){
+        var xhr = new XMLHttpRequest(),
+            dataSend = JSON.stringify(we.doc.name);
+
+        xhr.open('POST', '/checkname', false);
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                console.log(xhr.response);
+            }
+        };
+        xhr.send(dataSend);
+    };
+
+    we.changeLog = [];
 
     we.doc.sheetMenu = {};
 

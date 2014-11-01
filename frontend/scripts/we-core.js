@@ -288,6 +288,9 @@
                         value: 'Create',
                         onclick: function(){
                             readForm();
+
+                            we.doc.checkDocumentName();
+
                             we.core.msg.formFieldFinalize(this);
                             callback(convertToObject(we.core.msg.formFieldParams));
                         },
@@ -347,6 +350,7 @@
                     }
 
                     we.core.msg.formFieldParams = arr;
+                    we.doc.name = we.core.msg.formFieldParams[0];
                 }
 
                 function convertToObject(arr){
@@ -610,11 +614,8 @@
 
             //********************************************************
 
-            //TODO: refactoring
-            //create general settings
-
-            we.newDoc = we.dom.getElement('we-new-doc');
-            we.newDoc.onclick = function() {
+            we.core.control = {};
+            we.core.control.new = function() {
                 if(!we.doc.isOpened){
                     we.core.msg.formFieldBox(
                         {
@@ -706,9 +707,7 @@
                     }
                 }
             };
-
-            we.saveDoc = we.dom.getElement('we-save-doc');
-            we.saveDoc.onclick = function() {
+            we.core.control.save = function() {
                 if(!we.doc.isOpened){
                     we.core.msg.messageBox({
                         title: 'Warning!',
@@ -727,9 +726,7 @@
                     });
                 }
             };
-
-            we.openDoc = we.dom.getElement('we-open-doc');
-            we.openDoc.onclick = function() {
+            we.core.control.open = function() {
                 if(we.doc.isOpened){
                     if(we.doc.isSaved){
                         we.core.msg.dialogBox({
@@ -785,6 +782,18 @@
                     console.log('Open file dialog window...');
                 }
             };
+
+            //create general settings
+            we.core.ctrlBtn = {};
+
+            we.core.ctrlBtn.newDocumentButton = we.dom.getElement('we-new-doc');
+            we.core.ctrlBtn.newDocumentButton.onclick = we.core.control.new;
+
+            we.core.ctrlBtn.saveDocumentButton = we.dom.getElement('we-save-doc');
+            we.core.ctrlBtn.saveDocumentButton.onclick = we.core.control.save;
+
+            we.core.ctrlBtn.openDocumentButton = we.dom.getElement('we-open-doc');
+            we.core.ctrlBtn.openDocumentButton.onclick = we.core.control.open;
 
             we.core.init();
         }

@@ -13,7 +13,7 @@ body,
 }
 
 .we-container__body{
-    height: calc(100% - 100px);
+    height: calc(100% - 132px);
     background: #e7e7e7;
 }
 

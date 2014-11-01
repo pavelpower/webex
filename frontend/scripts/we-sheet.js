@@ -79,33 +79,6 @@
         }
     };
 
-    we.sheet.getTopRightNextSelectedCell = function(){
-        var selected = we.sheet.selection,
-            len = selected.length,
-            minRow = we.rows.count,
-            maxCol = 0,
-            tmpRow = null,
-            tmpCol = null,
-            sheet = null,
-            parseArr = [],
-            nextId = 'we-input-',
-            nextElem = null;
-
-        for(var i = 0; i < len; i++){
-            parseArr = selected[i].id.split('-').reverse();
-            tmpRow = parseArr[1];
-            tmpCol = parseArr[0];
-            sheet = parseArr[2];
-
-            if(tmpRow < minRow) minRow = tmpRow;
-
-            if(tmpCol > maxCol) maxCol = tmpCol;
-        }
-
-        nextId += sheet + '-' + ((minRow > 1 ? minRow - 1 : minRow)) + '-' + (maxCol);
-        nextElem = we.dom.getElement(nextId);
-    };
-
     we.sheet.upArrowDown = function(){
         var selected = we.sheet.selection,
             len = selected.length,
@@ -372,6 +345,9 @@
                         we.sheet.rightArrowDown();
                     } else if (e.keyCode === 187){
                         we.sheet.focusOn();
+                    } else if(e.keyCode === 83 && e.ctrlKey){
+                        we.core.control.save();
+                        e.preventDefault();
                     }
                 },
                 rowArr: [],
