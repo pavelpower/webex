@@ -179,6 +179,7 @@ body,
 }
 
 .we-header__add-document{
+    vertical-align: top;
     display: inline-block;
     width: 32px;
     height: 32px;
@@ -187,6 +188,7 @@ body,
 }
 
 .we-header__open-document{
+    vertical-align: top;
     display: inline-block;
     width: 32px;
     height: 32px;
@@ -217,6 +219,7 @@ body,
 }
 
 .we-header__save-document{
+    vertical-align: top;
     display: inline-block;
     width: 32px;
     height: 32px;
