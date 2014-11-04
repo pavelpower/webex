@@ -40,8 +40,29 @@
                 };
                 xhr.send(null);
             };
+            we.core.loadStartPage = function(){
+                var view = we.dom.getElement('view'),
+                    xhr = new XMLHttpRequest();
+
+                xhr.open('GET', 'templates/startPage.html', false);
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        view.innerHTML = xhr.responseText;
+                        //console.log(view);
+                    }
+                };
+                xhr.send(null);
+            };
             we.core.init = function() {
-                we.core.loadModule('../scripts/we-doc.js');
+                we.core.cookies.setCookies();
+
+                if(we.core.cookies.isExist('ucr')){
+                    console.log('Authorized user!');
+                } else{
+                    console.log('Unknown user!');
+                    we.core.loadStartPage();
+                }
+                //we.core.loadModule('../scripts/we-doc.js');
             };
             we.core.findClassInArray = function(key, value, array) {
                 var len = array.length;
@@ -624,6 +645,54 @@
 
             //********************************************************
 
+
+            //********************************************************
+            //****************block for work with cookies*************
+            //********************************************************
+
+            we.core.cookies = {};
+            we.cookies = {};
+            we.core.cookies.setCookies = function(){
+                var cookieStr = we.dom.document.cookie,
+                    cookieArr = cookieStr.split('; '),
+                    len = cookieArr.length,
+                    key = null,
+                    value = null,
+                    str = null;
+
+                we.cookies = {};
+
+                for(var i = 0; i < len; i++){
+                    str = cookieArr[i].split('=');
+
+                    key = str[0];
+                    value = str[1];
+
+                    we.cookies[key] = value;
+                }
+            };
+            we.core.cookies.getAll = function(){
+                return we.cookies;
+            };
+            we.core.cookies.set = function(key, value, expire){
+                we.dom.document.cookie = key + '=' + value + ';' + expire;
+                we.core.cookies.setCookies();
+            };
+            we.core.cookies.getCookie = function(key) {
+                return we.cookies[key];
+            };
+            we.core.cookies.deleteCookie = function(key) {
+                var d = new Date('1990-01-01');
+                we.dom.document.cookie = key + '=; expires=' + d + ';';
+                we.core.cookies.setCookies();
+            };
+            we.core.cookies.isExist = function(key){
+                var cookie = we.cookies[key];
+                return !!cookie;
+            };
+
+            //********************************************************
+
             we.core.control = {};
             we.core.control.new = function() {
                 if(!we.doc.isOpened){
@@ -795,15 +864,16 @@
 
             //create general settings
             we.core.ctrlBtn = {};
+            we.core.ctrlBtn.init = function(){
+                we.core.ctrlBtn.newDocumentButton = we.dom.getElement('we-new-doc');
+                we.core.ctrlBtn.newDocumentButton.onclick = we.core.control.new;
 
-            we.core.ctrlBtn.newDocumentButton = we.dom.getElement('we-new-doc');
-            we.core.ctrlBtn.newDocumentButton.onclick = we.core.control.new;
+                we.core.ctrlBtn.saveDocumentButton = we.dom.getElement('we-save-doc');
+                we.core.ctrlBtn.saveDocumentButton.onclick = we.core.control.save;
 
-            we.core.ctrlBtn.saveDocumentButton = we.dom.getElement('we-save-doc');
-            we.core.ctrlBtn.saveDocumentButton.onclick = we.core.control.save;
-
-            we.core.ctrlBtn.openDocumentButton = we.dom.getElement('we-open-doc');
-            we.core.ctrlBtn.openDocumentButton.onclick = we.core.control.open;
+                we.core.ctrlBtn.openDocumentButton = we.dom.getElement('we-open-doc');
+                we.core.ctrlBtn.openDocumentButton.onclick = we.core.control.open;
+            };
 
             we.core.init();
         }

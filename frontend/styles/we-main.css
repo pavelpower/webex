@@ -546,10 +546,56 @@ body,
     background: url('../images/sheet-menu/text-align-right.png') no-repeat center center;
 }
 
+.we-start-page{
+    background-color: #e7e7e7;
+    height: 100%;
+    width: 100%;
+}
 
+.we-start-page__menu{
+    margin: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    max-height: 300px;
+    width: 800px;
+}
 
+.we-menu{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 100%;
+}
 
+.we-menu__item{
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0 6px;
+    height: 100%;
+    width: 260px;
+    background-color: green;
+    height: 100%;
+    vertical-align: top;
+}
 
+.we-menu__item:first-of-type,
+.we-menu__item:last-of-type{
+    margin: 0;
+}
+
+.we-menu__item-logo-registration,
+.we-menu__item-logo-login,
+.we-menu__item-logo-help{
+    height: 150px;
+}
+
+.we-menu__item-description{
+    text-align: center;
+    height: calc(100% - 150px);
+}
 
 
 

@@ -7,71 +7,8 @@
     <script type="text/javascript" src="scripts/we-core.js"></script>
 </head>
 <body>
-<div class="we-container">
-    <div class="we-container__header">
-        <div class="we-header__mainMenu">
-            <input type="button" class="we-header__add-document" id="we-new-doc" />
-            <input type="button" class="we-header__open-document" id="we-open-doc" />
-            <input type="button" class="we-header__save-document" id="we-save-doc" />
-        </div>
-        <div class="we-header__settingsMenu">
-            <div class="we-settingsMenu__bold">
-                <span class="we-settingsMenu__bold-title">Text weight:</span>
-                <select class="we-settingsMenu__bold-select" id="we-settingsMenu__bold-select">
-                    <option value="400">normal</option>
-                    <option value="800">bold</option>
-                </select>
-            </div>
-            <div class="we-settingsMenu__color">
-                <span class="we-settingsMenu__color-title">Text color:</span>
-                <input type="color" class="we-settingsMenu__color-select" value="#000000" id="we-settingsMenu__color-select"/>
-            </div>
-            <div class="we-settingsMenu__textSize">
-                <span class="we-settingsMenu__textSize-title">Text size, px:</span>
-                <input type="number" value="12px" min="5" max="25" class="we-settingsMenu__textSize-field" id="we-settingsMenu__textSize-field"/>
-            </div>
-            <input type="button" class="we-settingsMenu__underline" id="we-settingsMenu__underline" />
-            <input type="button" class="we-settingsMenu__italic" id="we-settingsMenu__italic" />
-            <div class="we-settingsMenu__textAlign">
-                <span class="we-settingsMenu__textAlign-title">Text align:</span>
-                <input type="button" class="we-settingsMenu__textAlign-left" id="we-settingsMenu__textAlignLeft" />
-                <input type="button" class="we-settingsMenu__textAlign-center" id="we-settingsMenu__textAlignCenter" />
-                <input type="button" class="we-settingsMenu__textAlign-right" id="we-settingsMenu__textAlignRight" />
-            </div>
-            <div class="we-settingsMenu__borderThick">
-                <span class="we-settingsMenu__borderThick-title">Border thick:</span>
-                <input type="number" value="0" min="0" max="5" class="we-settingsMenu__borderThick-select" id="we-settingsMenu__borderThick"/>
-            </div>
-            <div class="we-settingsMenu__borderColor">
-                <span class="we-settingsMenu__borderColor-title">Border color:</span>
-                <input type="color" class="we-settingsMenu__borderColor-select" value="#000000" id="we-settingsMenu__borderColor"/>
-            </div>
-            <div class="we-settingsMenu__borderType">
-                <span class="we-settingsMenu__borderType-title">Border type:</span>
-                <select class="we-settingsMenu__borderType-select" id="we-settingsMenu__borderType">
-                    <option value="solid">solid</option>
-                    <option value="dashed">dashed</option>
-                    <option value="dotted">dotted</option>
-                    <option value="double">double</option>
-                </select>
-            </div>
-            <div class="we-settingsMenu__backgroundColor">
-                <span class="we-settingsMenu__backgroundColor-title">Background color:</span>
-                <input type="color" class="we-settingsMenu__backgroundColor-select" value="#000000" id="we-settingsMenu__backgroundColor"/>
-            </div>
-            <div class="we-settingsMenu__clearStyles">
-                <input type="button" class="we-settings__clearStyles-btn" id="we-settings__clearStyles-btn" title="Clear styles"/>
-            </div>
-        </div>
-        <div class="we-header__expBody">
-            <div class="we-expBody" id="we-bar">
-                <input type="text" class="we-rangeField" id="we-range-fld" disabled="disabled" readonly/>
-                <input type="button" value="f(x)" class="we-formulaBtn" id="we-formula-btn" disabled="disabled"/>
-                <input type="text" class="we-formulaField" id="we-formula-fld" disabled="disabled"/>
-            </div>
-        </div>
-    </div>
-    <div class="we-container__body" id="we-container__body"></div>
+<div class="we-container" id="view">
+
 </div>
 </body>
 </html>
