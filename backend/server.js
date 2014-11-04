@@ -30,6 +30,11 @@ server.post('/checkname', function(req, res) {
     });
 });
 
+server.post('/registration', function(req, res){
+    console.log(req.body);
+    res.send('Sended response from server!');
+});
+
 server.listen(3000, function(){
     console.log('Listen the port 3000...');
 });

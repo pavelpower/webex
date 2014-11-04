@@ -48,7 +48,18 @@
                 xhr.onreadystatechange = function(){
                     if(xhr.readyState === 4 && xhr.status === 200){
                         view.innerHTML = xhr.responseText;
-                        //console.log(view);
+                    }
+                };
+                xhr.send(null);
+            };
+            we.core.loadRegistrationPage = function(){
+                var view = we.dom.getElement('view'),
+                    xhr = new XMLHttpRequest();
+
+                xhr.open('GET', 'templates/registrationPage.html', false);
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        view.innerHTML = xhr.responseText;
                     }
                 };
                 xhr.send(null);
@@ -61,8 +72,152 @@
                 } else{
                     console.log('Unknown user!');
                     we.core.loadStartPage();
+                    we.core.initStartPage();
                 }
                 //we.core.loadModule('../scripts/we-doc.js');
+            };
+            we.core.initStartPage = function() {
+                var reg = we.dom.getElement('we-register'),
+                    log = we.dom.getElement('we-login'),
+                    help = we.dom.getElement('we-help-info');
+
+                reg.onclick = function(){
+                    console.log('Registration!');
+                    we.core.loadRegistrationPage();
+                    we.core.initRegistrationPage();
+                };
+                log.onclick = function(){
+                    console.log('Login!');
+                };
+                help.onclick = function(){
+                    console.log('Help Information!');
+                };
+            };
+
+            we.core.verifyEmail = function(elem){
+                var email = elem.value,
+                    regExp = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/gi;
+
+                if(email.search(regExp) === -1){
+                    return false;
+                } else {
+                    return true;
+                }
+            };
+            we.core.verifyFName = function(elem){
+                var fname = elem.value,
+                    regExp = /[a-zA-Z]+/gi;
+
+                if(fname.search(regExp) === -1){
+                    return false;
+                } else {
+                    return true;
+                }
+            };
+            we.core.verifyLName = function(elem){
+                var lname = elem.value,
+                    regExp = /[a-zA-Z]+/gi;
+
+                if(lname.search(regExp) === -1){
+                    return false;
+                } else {
+                    return true;
+                }
+            };
+            we.core.verifyPass = function(elem){
+                var pass = elem.value;
+                return true;
+            };
+            we.core.verifyCPass = function(elem){
+                var cpass = elem.value,
+                    pass = we.dom.getElement('we-pass').value;
+
+                if(!!pass){
+                    if (pass === cpass){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            };
+
+            we.core.verifyRegForm = function(){};
+            we.core.initRegistrationPage = function(){
+                var email = we.dom.getElement('we-email'),
+                    fname = we.dom.getElement('we-first-name'),
+                    lname = we.dom.getElement('we-last-name'),
+                    pass = we.dom.getElement('we-pass'),
+                    cpass = we.dom.getElement('we-conf-pass'),
+                    send_button = we.dom.getElement('we-send-registration');
+
+                email.oninput = function(){
+                    if(!we.core.verifyEmail(this)){
+                        this.style.backgroundColor = '#EDAFBD';
+                    } else {
+                        this.style.backgroundColor = '#BBF0D4';
+                    }
+                };
+                fname.oninput = function(){
+                    if(!we.core.verifyFName(this)){
+                        this.style.backgroundColor = '#EDAFBD';
+                    } else {
+                        this.style.backgroundColor = '#BBF0D4';
+                    }
+                };
+                lname.oninput = function(){
+                    if(!we.core.verifyLName(this)){
+                        this.style.backgroundColor = '#EDAFBD';
+                    } else {
+                        this.style.backgroundColor = '#BBF0D4';
+                    }
+                };
+                pass.oninput = function(){
+                    if(!we.core.verifyPass(this)){
+                        this.style.backgroundColor = '#EDAFBD';
+                    } else {
+                        this.style.backgroundColor = '#BBF0D4';
+                    }
+                };
+                cpass.oninput = function(){
+                    if(!we.core.verifyCPass(this)){
+                        this.style.backgroundColor = '#EDAFBD';
+                    } else {
+                        this.style.backgroundColor = '#BBF0D4';
+                    }
+                };
+                send_button.onclick = function(){
+                    if(we.core.verifyEmail(email) &&
+                        we.core.verifyFName(fname) &&
+                        we.core.verifyLName(lname) &&
+                        we.core.verifyPass(pass) &&
+                        we.core.verifyCPass(cpass)){
+                        var xhr = new XMLHttpRequest(),
+                            data = {
+                                email: email.value,
+                                fname: fname.value,
+                                lname: lname.value,
+                                pass: pass.value
+                            },
+                            dataStr = JSON.stringify(data);
+
+                        console.log(dataStr);
+
+                        xhr.open('POST', '/registration', false);
+                        xhr.onreadystatechange = function(){
+                            if(xhr.readyState === 4 && xhr.status === 200){
+                                console.log(xhr.responseText);
+                            }
+                        };
+                        xhr.send(dataStr);
+                    } else {
+                        we.core.msg.messageBox({
+                            title: 'Error!',
+                            text: 'Some fields are not filled, or are filled incorrect!'
+                        });
+                    }
+                };
             };
             we.core.findClassInArray = function(key, value, array) {
                 var len = array.length;

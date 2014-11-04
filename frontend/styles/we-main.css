@@ -546,7 +546,8 @@ body,
     background: url('../images/sheet-menu/text-align-right.png') no-repeat center center;
 }
 
-.we-start-page{
+.we-start-page,
+.we-registration-form{
     background-color: #e7e7e7;
     height: 100%;
     width: 100%;
@@ -561,6 +562,41 @@ body,
     right: 0;
     max-height: 300px;
     width: 800px;
+}
+
+.we-registration-form__gerForm{
+    margin: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    max-height: 300px;
+    width: 300px;
+    border: 1px solid #777777;
+    text-align: center;
+}
+
+.we-reg-field{
+    height: 30px;
+    width: calc(100% - 10px);
+    font-size: 20px;
+    margin: 5px;
+    box-sizing: border-box;
+    border: 1px solid #777777;
+    padding: 5px;
+}
+
+.we-reg-submit{
+    height: 30px;
+    width: calc(100% - 10px);
+    box-sizing: border-box;
+    border: 1px solid #777777;
+    background-color: #BBBBBB;
+    font-family: Arial;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 0;
 }
 
 .we-menu{
