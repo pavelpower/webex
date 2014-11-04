@@ -547,7 +547,8 @@ body,
 }
 
 .we-start-page,
-.we-registration-form{
+.we-registration-form,
+.we-login-form{
     background-color: #e7e7e7;
     height: 100%;
     width: 100%;
@@ -577,7 +578,21 @@ body,
     text-align: center;
 }
 
-.we-reg-field{
+.we-login-form__gerForm{
+    margin: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    max-height: 180px;
+    width: 300px;
+    border: 1px solid #777777;
+    text-align: center;
+}
+
+.we-reg-field,
+.we-login-field{
     height: 30px;
     width: calc(100% - 10px);
     font-size: 20px;
@@ -587,7 +602,8 @@ body,
     padding: 5px;
 }
 
-.we-reg-submit{
+.we-reg-submit,
+.we-login-submit{
     height: 30px;
     width: calc(100% - 10px);
     box-sizing: border-box;

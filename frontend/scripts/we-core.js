@@ -64,6 +64,18 @@
                 };
                 xhr.send(null);
             };
+            we.core.loadLoginPage = function(){
+                var view = we.dom.getElement('view'),
+                    xhr = new XMLHttpRequest();
+
+                xhr.open('GET', 'templates/loginPage.html', false);
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        view.innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send(null);
+            };
             we.core.init = function() {
                 we.core.cookies.setCookies();
 
@@ -88,6 +100,8 @@
                 };
                 log.onclick = function(){
                     console.log('Login!');
+                    we.core.loadLoginPage();
+                    we.core.initLoginPage();
                 };
                 help.onclick = function(){
                     console.log('Help Information!');
@@ -208,7 +222,68 @@
                         xhr.setRequestHeader('Content-type', 'application/json');
                         xhr.onreadystatechange = function(){
                             if(xhr.readyState === 4 && xhr.status === 200){
+                                var res = JSON.parse(xhr.responseText);
+
                                 console.log(xhr.responseText);
+
+                                if(res.result){
+
+                                } else{
+                                    we.core.msg.messageBox({
+                                        title: 'Error!',
+                                        text: res.message
+                                    });
+                                }
+                            }
+                        };
+                        xhr.send(dataStr);
+                    } else {
+                        we.core.msg.messageBox({
+                            title: 'Error!',
+                            text: 'Some fields are not filled, or are filled incorrect!'
+                        });
+                    }
+                };
+            };
+            we.core.initLoginPage = function(){
+                var email = we.dom.getElement('we-login-email'),
+                    pass = we.dom.getElement('we-login-pass'),
+                    send_button = we.dom.getElement('we-send-login');
+
+                email.oninput = function(){
+                    if(!we.core.verifyEmail(this)){
+                        this.style.backgroundColor = '#EDAFBD';
+                    } else {
+                        this.style.backgroundColor = '#BBF0D4';
+                    }
+                };
+                pass.oninput = function(){
+                    if(!we.core.verifyPass(this)){
+                        this.style.backgroundColor = '#EDAFBD';
+                    } else {
+                        this.style.backgroundColor = '#BBF0D4';
+                    }
+                };
+                send_button.onclick = function(){
+                    if(we.core.verifyEmail(email) && we.core.verifyPass(pass)){
+                        var xhr = new XMLHttpRequest(),
+                            data = {
+                                email: email.value,
+                                pass: pass.value
+                            },
+                            dataStr = JSON.stringify(data);
+
+                        xhr.open('POST', '/login', false);
+                        xhr.setRequestHeader('Content-type', 'application/json');
+                        xhr.onreadystatechange = function(){
+                            var view = we.dom.getElement('view');
+
+                            if(xhr.readyState === 4 && xhr.status === 200){
+                                var res = JSON.parse(xhr.responseText);
+                                view.innerHTML = res.content;
+
+                                we.core.loadModule('../scripts/we-doc.js');
+                                we.core.ctrlBtn.init();
                             }
                         };
                         xhr.send(dataStr);
