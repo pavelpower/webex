@@ -79,14 +79,26 @@
             we.core.init = function() {
                 we.core.cookies.setCookies();
 
-                if(we.core.cookies.isExist('ucr')){
+                if(we.core.cookies.isExist('user')){
                     console.log('Authorized user!');
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'templates/mainPage.html', false);
+                    xhr.onreadystatechange = function(){
+                        if(xhr.readyState === 4 && xhr.status === 200){
+                            var view = we.dom.getElement('view');
+                            view.innerHTML = xhr.responseText;
+                        }
+                    };
+                    xhr.send(null);
+
+                    we.core.loadModule('../scripts/we-doc.js');
+                    we.core.ctrlBtn.init();
                 } else{
                     console.log('Unknown user!');
                     we.core.loadStartPage();
                     we.core.initStartPage();
                 }
-                //we.core.loadModule('../scripts/we-doc.js');
             };
             we.core.initStartPage = function() {
                 var reg = we.dom.getElement('we-register'),
@@ -282,6 +294,7 @@
                                 var res = JSON.parse(xhr.responseText);
                                 view.innerHTML = res.content;
 
+                                we.core.cookies.set('user', email.value);
                                 we.core.loadModule('../scripts/we-doc.js');
                                 we.core.ctrlBtn.init();
                             }
