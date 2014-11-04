@@ -576,7 +576,6 @@ body,
     margin: 0 6px;
     height: 100%;
     width: 260px;
-    background-color: green;
     height: 100%;
     vertical-align: top;
 }
@@ -586,15 +585,29 @@ body,
     margin: 0;
 }
 
-.we-menu__item-logo-registration,
-.we-menu__item-logo-login,
+.we-menu__item:hover{
+    cursor: pointer;
+    background-color: #777777;
+}
+
+.we-menu__item-logo-registration{
+    height: 170px;
+    background: url('../images/register-icon.png') no-repeat center center;
+}
+
+.we-menu__item-logo-login{
+    height: 170px;
+    background: url('../images/login-icon.png') no-repeat center center;
+}
+
 .we-menu__item-logo-help{
-    height: 150px;
+    height: 170px;
+    background: url('../images/help-icon.png') no-repeat center center;
 }
 
 .we-menu__item-description{
     text-align: center;
-    height: calc(100% - 150px);
+    height: calc(100% - 170px);
 }
 
 
