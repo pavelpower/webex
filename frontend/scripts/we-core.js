@@ -205,6 +205,7 @@
                         console.log(dataStr);
 
                         xhr.open('POST', '/registration', false);
+                        xhr.setRequestHeader('Content-type', 'application/json');
                         xhr.onreadystatechange = function(){
                             if(xhr.readyState === 4 && xhr.status === 200){
                                 console.log(xhr.responseText);
