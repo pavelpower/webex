@@ -4,7 +4,9 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongojs = require('mongojs'),
     db = mongojs('webex'),
-    fs = require('fs');
+    fs = require('fs'),
+    sha = require('sha256'),
+    testMail = 'mike@mail.ru';
 
 server.use(express.static(location));
 server.use(bodyParser.json());
@@ -39,7 +41,9 @@ server.post('/registration', function(req, res){
             email: req.body.email
         },
         result = {},
-        findDocs = null;
+        findDocs = null,
+        appHash = crypto.createHash('sha256'),
+        email = req.body.email;
 
     collection.find(findObj, function(err, docs){
         if(err) throw err;
